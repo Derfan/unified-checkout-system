@@ -35,6 +35,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@repo/schema':
+        specifier: workspace:*
+        version: link:../../packages/schema
       '@repo/ui':
         specifier: workspace:*
         version: link:../../packages/ui
