@@ -1,38 +1,36 @@
-import { render, screen } from "@testing-library/react";
-import { describe, it, expect } from "vitest";
-import Home from "./page";
+import { render, screen } from '@testing-library/react';
+import { describe, it, expect } from 'vitest';
+import Home from './page';
 
-describe("Home Page", () => {
-  it("renders the Turborepo logo", () => {
+describe('Home Page', () => {
+  it('renders the Turborepo logo', () => {
     render(<Home />);
-    const logos = screen.getAllByAltText("Turborepo logo");
+    const logos = screen.getAllByAltText('Turborepo logo');
     expect(logos.length).toBeGreaterThan(0);
   });
 
-  it("renders the getting started text", () => {
+  it('renders the getting started text', () => {
     render(<Home />);
     expect(screen.getByText(/Get started by editing/i)).toBeInTheDocument();
   });
 
-  it("renders the save changes text", () => {
+  it('renders the save changes text', () => {
     render(<Home />);
-    expect(
-      screen.getByText(/Save and see your changes instantly/i),
-    ).toBeInTheDocument();
+    expect(screen.getByText(/Save and see your changes instantly/i)).toBeInTheDocument();
   });
 
-  it("renders the deploy now button", () => {
+  it('renders the deploy now button', () => {
     render(<Home />);
-    expect(screen.getByText("Deploy now")).toBeInTheDocument();
+    expect(screen.getByText('Deploy now')).toBeInTheDocument();
   });
 
-  it("renders the read our docs link", () => {
+  it('renders the read our docs link', () => {
     render(<Home />);
-    expect(screen.getByText("Read our docs")).toBeInTheDocument();
+    expect(screen.getByText('Read our docs')).toBeInTheDocument();
   });
 
-  it("renders the open alert button", () => {
+  it('renders the open alert button', () => {
     render(<Home />);
-    expect(screen.getByText("Open alert")).toBeInTheDocument();
+    expect(screen.getByText('Open alert')).toBeInTheDocument();
   });
 });
