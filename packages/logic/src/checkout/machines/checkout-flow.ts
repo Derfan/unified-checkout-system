@@ -42,6 +42,7 @@ export const checkoutFlowMachine = setup({
   states: {
     personalDetailsStep: {
       invoke: {
+        id: personalDetailsMachine.id,
         src: 'personalDetailsStep',
         input: ({ context }) => ({ initialData: context.personalDetails }),
         onDone: {
@@ -57,6 +58,7 @@ export const checkoutFlowMachine = setup({
         BACK: 'personalDetailsStep',
       },
       invoke: {
+        id: shippingAddressMachine.id,
         src: 'shippingAddressStep',
         input: ({ context }) => ({ initialData: context.shippingAddress }),
         onDone: {
@@ -72,6 +74,7 @@ export const checkoutFlowMachine = setup({
         BACK: 'shippingAddressStep',
       },
       invoke: {
+        id: paymentDetailsMachine.id,
         src: 'paymentDetailsStep',
         input: ({ context }) => ({ initialData: context.paymentDetails }),
         onDone: {
