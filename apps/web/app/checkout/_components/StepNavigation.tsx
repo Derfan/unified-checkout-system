@@ -8,7 +8,7 @@ export const StepNavigation = ({ nextLabel = 'Next Step' }: StepNavigationProps)
   const canGoBack = true; // Placeholder for actual logic
 
   return (
-    <div className="flex justify-between p-4 bg-white">
+    <div className="flex justify-between p-4 bg-white shadow-sm">
       {canGoBack ? (
         <Button variant="tertiary">Go Back</Button>
       ) : (

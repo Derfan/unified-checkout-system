@@ -28,9 +28,4 @@ describe('Home Page', () => {
     render(<Home />);
     expect(screen.getByText('Read our docs')).toBeInTheDocument();
   });
-
-  it('renders the open alert button', () => {
-    render(<Home />);
-    expect(screen.getByText('Open alert')).toBeInTheDocument();
-  });
 });

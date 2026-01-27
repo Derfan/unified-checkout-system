@@ -7,7 +7,11 @@ const STEPS = [
   { id: 'confirmation', label: 'Summary' },
 ];
 
-export const Stepper = () => {
+interface StepperProps {
+  className?: string;
+}
+
+export const Stepper = ({ className }: StepperProps) => {
   const activeStepIndex = 1; // Example: hardcoded active step index
 
   const getStepStatus = (index: number) => {
@@ -19,7 +23,7 @@ export const Stepper = () => {
   };
 
   return (
-    <nav aria-label="Progress" className="py-8 bg-blue-800">
+    <nav aria-label="Progress" className={className}>
       <ul className="flex items-center justify-center gap-x-4">
         {STEPS.map((step, idx) => (
           <li key={step.id}>

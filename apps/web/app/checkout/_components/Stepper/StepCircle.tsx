@@ -2,13 +2,17 @@ import { cva, type VariantProps } from 'class-variance-authority';
 
 import { cn } from '../../../../styles/utils';
 
-interface StepCircleProps extends VariantProps<typeof buttonVariants> {
+interface StepCircleProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
   stepNumber: number;
 }
 
-export const StepCircle = ({ stepNumber, status, size }: StepCircleProps) => {
+export const StepCircle = ({ stepNumber, status, size, className }: StepCircleProps) => {
   return (
-    <button className={cn(buttonVariants({ status, size }))} disabled={status === 'upcoming'}>
+    <button
+      className={cn(buttonVariants({ status, size, className }))}
+      disabled={status === 'upcoming'}
+    >
       {stepNumber}
     </button>
   );
