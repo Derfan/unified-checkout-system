@@ -1,5 +1,5 @@
 import { CheckoutContext } from '../providers/CheckoutProvider';
 
-export const useCheckout = () => {
-  return CheckoutContext.useActorRef();
-};
+export const useCheckoutActorRef = CheckoutContext.useActorRef;
+
+export const useCheckoutSelector = CheckoutContext.useSelector;

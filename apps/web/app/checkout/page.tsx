@@ -1,13 +1,14 @@
-import { Footer } from '../../components/layout';
+import { Stepper } from './_components/Stepper';
+import { StepNavigation } from './_components/StepNavigation';
 
 export default function CheckoutPage() {
   return (
     <>
-      <main className="grow bg-blue-100">
-        <h1 className="text-3xl font-bold underline">Checkout Page</h1>
-      </main>
+      <Stepper />
 
-      <Footer />
+      <main className="grow bg-blue-100"></main>
+
+      <StepNavigation />
     </>
   );
 }
