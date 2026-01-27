@@ -6,9 +6,9 @@ import { Surface } from '../../components/ui';
 export default function CheckoutPage() {
   return (
     <>
-      <Stepper className="py-8 bg-blue-800" />
+      <Stepper className="py-8" />
 
-      <main className="grow bg-blue-100 px-4">
+      <main className="grow px-4">
         <Surface>Surface</Surface>
       </main>
 
