@@ -14,6 +14,7 @@
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
     "@repo/logic": "workspace:*",
     "@repo/schema": "workspace:*",
     "@tailwindcss/postcss": "^4.1.18",

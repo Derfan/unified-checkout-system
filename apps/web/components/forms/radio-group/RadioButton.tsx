@@ -4,9 +4,8 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../../styles/utils';
 
 export interface RadioButtonProps
-  extends React.LabelHTMLAttributes<HTMLLabelElement>, VariantProps<typeof radioButtonVariants> {
+  extends React.InputHTMLAttributes<HTMLInputElement>, VariantProps<typeof radioButtonVariants> {
   label: string;
-  value: string;
 }
 
 /**
@@ -15,10 +14,10 @@ export interface RadioButtonProps
  * @returns A label element containing a radio input and its label.
  */
 export const RadioButton = React.forwardRef<HTMLLabelElement, RadioButtonProps>(
-  ({ id, label, value, state, className }, ref) => {
+  ({ id, label, state, className, ...props }, ref) => {
     return (
       <label ref={ref} id={id} className={cn(radioButtonVariants({ state, className }))}>
-        <input type="radio" name="radio-group" className="sr-only" value={value} />
+        <input type="radio" className="sr-only" {...props} />
 
         <span>{label}</span>
       </label>

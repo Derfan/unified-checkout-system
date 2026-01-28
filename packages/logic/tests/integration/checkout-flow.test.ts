@@ -6,10 +6,12 @@ import { checkoutFlowMachine } from '../../src/checkout/machines/checkout-flow';
 
 describe('Checkout Flow Orchestrator', () => {
   const validPersonalDetails: PersonalDetails = {
+    title: 'mr',
     firstName: 'John',
     lastName: 'Doe',
-    dateOfBirth: new Date('1990-01-01'),
+    dateOfBirth: '1990-01-01',
     email: 'john@test.com',
+    phoneNumber: '+1234567890',
   };
   const validShippingAddress: Address = {
     streetAddress: '123 Main St',

@@ -6,10 +6,12 @@ import { personalDetailsMachine } from '../../src/checkout/machines/steps/person
 
 describe('Step Machine (Personal Details)', () => {
   const validData: PersonalDetails = {
+    title: 'mr',
     firstName: 'John',
     lastName: 'Doe',
-    dateOfBirth: new Date('1990-01-01'),
+    dateOfBirth: '1990-01-01',
     email: 'john@test.com',
+    phoneNumber: '+1234567890',
   };
 
   it('should start in "idle" state with initial data from input', () => {

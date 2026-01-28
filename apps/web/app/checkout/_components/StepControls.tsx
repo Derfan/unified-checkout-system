@@ -1,21 +1,26 @@
 import { Button } from '../../../components/ui';
 
-interface StepNavigationProps {
+interface StepControlsProps {
   nextLabel?: string;
+  onBack?: () => void;
 }
 
-export const StepNavigation = ({ nextLabel = 'Next Step' }: StepNavigationProps) => {
+export const StepControls = ({ nextLabel = 'Next Step', onBack }: StepControlsProps) => {
   const canGoBack = true; // Placeholder for actual logic
 
   return (
     <div className="flex justify-between p-4 bg-white shadow-sm">
       {canGoBack ? (
-        <Button variant="tertiary">Go Back</Button>
+        <Button variant="tertiary" onClick={onBack}>
+          Go Back
+        </Button>
       ) : (
         <div /> // Spacer to keep "Next" on the right
       )}
 
-      <Button variant="primary">{nextLabel}</Button>
+      <Button type="submit" variant="primary">
+        {nextLabel}
+      </Button>
     </div>
   );
 };

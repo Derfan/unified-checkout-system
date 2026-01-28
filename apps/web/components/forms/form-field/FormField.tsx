@@ -10,7 +10,6 @@ export interface FormFieldProps {
   label: string;
   children: React.ReactElement<InputProps>;
   id?: string;
-  name?: string;
   errorMessage?: string;
   className?: string;
 }
@@ -24,22 +23,18 @@ export interface FormFieldProps {
  * @param className - Additional class names for styling.
  * @returns A styled form field element.
  */
-export const FormField = ({
-  id,
-  name,
-  errorMessage,
-  children,
-  label,
-  className,
-}: FormFieldProps) => {
+export const FormField = ({ id, label, children, errorMessage, className }: FormFieldProps) => {
   return (
-    <div className={cn('flex flex-col gap-y-0.5', className)}>
-      <Label htmlFor={id}>{label}</Label>
+    <div className={cn('flex flex-col', className)}>
+      <Label htmlFor={id} className="mb-1">
+        {label}
+      </Label>
 
       {React.cloneElement(children, {
         id,
-        name,
         error: !!errorMessage,
+        'aria-invalid': !!errorMessage,
+        'aria-describedby': errorMessage ? `${id}-error` : undefined,
       })}
 
       {errorMessage ? <ErrorMessage>{errorMessage}</ErrorMessage> : null}
