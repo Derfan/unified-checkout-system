@@ -1,2 +1,4 @@
-export * from './FormField';
-export * from './TextInput';
+export * from './form-field';
+export * from './input';
+
+export * from './phone-input';

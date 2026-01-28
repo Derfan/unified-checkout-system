@@ -2,12 +2,12 @@ import { createRef } from 'react';
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 
-import { TextInput } from './TextInput';
+import { Input } from './Input';
 
-describe('TextInput Component', () => {
+describe('Input Component', () => {
   it('should render with default styles', () => {
     // Arrange
-    render(<TextInput placeholder="Enter text" />);
+    render(<Input placeholder="Enter text" />);
 
     // Act
     const input = screen.getByPlaceholderText('Enter text');
@@ -20,7 +20,7 @@ describe('TextInput Component', () => {
 
   it('should apply the error state classes', () => {
     // Arrange
-    render(<TextInput state="error" placeholder="Error input" />);
+    render(<Input state="error" placeholder="Error input" />);
 
     // Act
     const input = screen.getByPlaceholderText('Error input');
@@ -31,7 +31,7 @@ describe('TextInput Component', () => {
 
   it('should apply the disabled state and be non-interactive', () => {
     // Arrange
-    render(<TextInput state="disabled" placeholder="Disabled input" />);
+    render(<Input state="disabled" placeholder="Disabled input" />);
 
     // Act
     const input = screen.getByPlaceholderText('Disabled input');
@@ -44,7 +44,7 @@ describe('TextInput Component', () => {
   it('should forward ref to the input element', () => {
     // Arrange
     const inputRef = createRef<HTMLInputElement>();
-    render(<TextInput ref={inputRef} placeholder="Ref input" />);
+    render(<Input ref={inputRef} placeholder="Ref input" />);
 
     // Act
     const input = screen.getByPlaceholderText('Ref input');

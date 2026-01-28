@@ -3,12 +3,12 @@ import React from 'react';
 import { ErrorMessage } from './ErrorMessage';
 import { Label } from './Label';
 
-import type { TextInputProps } from '../TextInput';
+import type { InputProps } from '../Input';
 import { cn } from '../../../styles/utils';
 
 export interface FormFieldProps {
   label: string;
-  children: React.ReactElement<TextInputProps>;
+  children: React.ReactElement<InputProps>;
   id?: string;
   errorMessage?: string;
   className?: string;
