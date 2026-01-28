@@ -3,13 +3,14 @@ import React from 'react';
 import { ErrorMessage } from './ErrorMessage';
 import { Label } from './Label';
 
-import type { InputProps } from '../Input';
+import type { InputProps } from '../input';
 import { cn } from '../../../styles/utils';
 
 export interface FormFieldProps {
   label: string;
   children: React.ReactElement<InputProps>;
   id?: string;
+  name?: string;
   errorMessage?: string;
   className?: string;
 }
@@ -23,13 +24,21 @@ export interface FormFieldProps {
  * @param className - Additional class names for styling.
  * @returns A styled form field element.
  */
-export const FormField = ({ id, errorMessage, children, label, className }: FormFieldProps) => {
+export const FormField = ({
+  id,
+  name,
+  errorMessage,
+  children,
+  label,
+  className,
+}: FormFieldProps) => {
   return (
     <div className={cn('flex flex-col gap-y-0.5', className)}>
       <Label htmlFor={id}>{label}</Label>
 
       {React.cloneElement(children, {
         id,
+        name,
         error: !!errorMessage,
       })}
 
