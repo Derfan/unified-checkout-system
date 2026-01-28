@@ -11,6 +11,8 @@ export interface RadioGroupProps<T = string> {
 
 /**
  * RadioGroup component that renders a group of radio buttons.
+ * @param props - RadioGroup properties including options, name, value, and error state.
+ * @returns A div element containing radio buttons.
  */
 export const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupProps>(
   ({ options, name, value, error }, ref) => {

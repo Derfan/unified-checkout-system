@@ -11,6 +11,8 @@ export interface RadioButtonProps
 
 /**
  * RadioButton component that represents a single radio button.
+ * @param props - RadioButton properties including id, label, value, state, and className.
+ * @returns A label element containing a radio input and its label.
  */
 export const RadioButton = React.forwardRef<HTMLLabelElement, RadioButtonProps>(
   ({ id, label, value, state, className }, ref) => {

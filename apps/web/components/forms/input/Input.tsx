@@ -28,7 +28,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
 Input.displayName = 'Input';
 
-const inputVariants = cva('border p-2 rounded transition-colors outline-none', {
+const inputVariants = cva('w-full border p-2 rounded transition-colors outline-none', {
   variants: {
     state: {
       default: 'border-gray-300 hover:border-blue-500 focus:border-blue-700',

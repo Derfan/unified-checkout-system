@@ -3,6 +3,7 @@ import { PersonaTitles } from '@repo/schema';
 import { Stepper } from './_components/Stepper';
 import { StepNavigation } from './_components/StepNavigation';
 
+import { Row } from '../../components/layout';
 import { Surface, Heading, Text } from '../../components/ui';
 import { FormField, RadioGroup, Input, PhoneInput } from '../../components/forms';
 
@@ -29,13 +30,15 @@ export default function CheckoutPage() {
             />
           </FormField>
 
-          <FormField id="firstName" name="firstName" label="First Name" className="mt-2">
-            <Input placeholder="e.g. Stephen" />
-          </FormField>
+          <Row space="sm" className="mt-2">
+            <FormField id="firstName" name="firstName" label="First Name">
+              <Input placeholder="e.g. Stephen" />
+            </FormField>
 
-          <FormField id="lastName" name="lastName" label="Last Name" className="mt-2">
-            <Input placeholder="e.g. King" />
-          </FormField>
+            <FormField id="lastName" name="lastName" label="Last Name">
+              <Input placeholder="e.g. King" />
+            </FormField>
+          </Row>
 
           <FormField id="phoneNumber" name="phoneNumber" label="Phone Number" className="mt-2">
             <PhoneInput placeholder="e.g. +49 1234 567890" />
