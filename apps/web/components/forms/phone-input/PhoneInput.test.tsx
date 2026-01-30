@@ -1,6 +1,6 @@
 import { createRef } from 'react';
 import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 
 import { PhoneInput } from './PhoneInput';
 
@@ -51,5 +51,19 @@ describe('PhoneInput Component', () => {
 
     // Assert
     expect(inputRef.current).toBe(input);
+  });
+
+  it('should format phone number dynamically as user types', () => {
+    // Arrange
+    render(<PhoneInput placeholder="Dynamic phone input" />);
+
+    // Act
+    const input = screen.getByPlaceholderText('Dynamic phone input') as HTMLInputElement;
+
+    // Simulate user typing a phone number
+    fireEvent.change(input, { target: { value: '4915123456789' } });
+
+    // Assert
+    expect(input.value).toBe('+49 1512 3456789');
   });
 });

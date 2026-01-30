@@ -5,22 +5,17 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { PersonaTitles, PersonalDetails, PersonalDetailsSchema } from '@repo/schema';
 
-import { useCheckoutSelector } from '../../../../hooks/checkout';
+import { useCheckoutChildActorRef, useCheckoutSelector } from '../../../../hooks/checkout';
 import { Row } from '../../../../components/layout';
 import { Surface, Heading, Text } from '../../../../components/ui';
 import { FormField, RadioGroup, Input, PhoneInput } from '../../../../components/forms';
 import { StepControls } from '../StepControls';
 
 export const PersonalInfoStep = () => {
-  const { defaultValues, actor } = useCheckoutSelector(
-    useCallback(
-      (state) => ({
-        defaultValues: state.context.personalDetails ?? {},
-        actor: state.children['personal-details'],
-      }),
-      [],
-    ),
+  const defaultValues = useCheckoutSelector(
+    useCallback((state) => state.context.personalDetails ?? {}, []),
   );
+  const childActorRef = useCheckoutChildActorRef('personal-details');
 
   const {
     handleSubmit,
@@ -34,9 +29,9 @@ export const PersonalInfoStep = () => {
 
   const onSubmit = useCallback(
     (data: PersonalDetails) => {
-      actor?.send({ type: 'SUBMIT', payload: data });
+      childActorRef?.send({ type: 'SUBMIT', payload: data });
     },
-    [actor],
+    [childActorRef],
   );
 
   return (
