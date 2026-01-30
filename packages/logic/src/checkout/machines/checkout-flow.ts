@@ -10,22 +10,22 @@ type DeepNonNullable<T> = {
   [P in keyof T]: NonNullable<T[P]>;
 };
 
-type CheckoutFlowContext = {
-  personalDetails: OutputFrom<typeof personalDetailsMachine> | null;
-  shippingAddress: OutputFrom<typeof shippingAddressMachine> | null;
-  paymentDetails: OutputFrom<typeof paymentDetailsMachine> | null;
-};
-
-type CheckoutFlowEvent = { type: 'BACK' };
-
-type CheckoutFlowOutput = DeepNonNullable<CheckoutFlowContext>;
-
 export enum CheckoutFlowStates {
   PersonalDetailsStep = 'personalDetailsStep',
   ShippingAddressStep = 'shippingAddressStep',
   PaymentDetailsStep = 'paymentDetailsStep',
   Completed = 'completed',
 }
+
+type CheckoutFlowContext = {
+  personalDetailsData: OutputFrom<typeof personalDetailsMachine> | null;
+  shippingAddressData: OutputFrom<typeof shippingAddressMachine> | null;
+  paymentDetailsData: OutputFrom<typeof paymentDetailsMachine> | null;
+};
+
+type CheckoutFlowEvent = { type: 'BACK' } | { type: 'GO_TO_STEP'; payload: CheckoutFlowStates };
+
+type CheckoutFlowOutput = DeepNonNullable<CheckoutFlowContext>;
 
 export const checkoutFlowMachine = setup({
   types: {} as {
@@ -34,28 +34,28 @@ export const checkoutFlowMachine = setup({
     output: CheckoutFlowOutput;
   },
   actors: {
-    [CheckoutFlowStates.PersonalDetailsStep]: personalDetailsMachine,
-    [CheckoutFlowStates.ShippingAddressStep]: shippingAddressMachine,
-    [CheckoutFlowStates.PaymentDetailsStep]: paymentDetailsMachine,
+    personalDetailsMachine,
+    shippingAddressMachine,
+    paymentDetailsMachine,
   },
 }).createMachine({
   id: 'checkout-flow',
   context: {
-    personalDetails: null,
-    shippingAddress: null,
-    paymentDetails: null,
+    personalDetailsData: null,
+    shippingAddressData: null,
+    paymentDetailsData: null,
   },
   initial: CheckoutFlowStates.PersonalDetailsStep,
   states: {
     [CheckoutFlowStates.PersonalDetailsStep]: {
       invoke: {
         id: personalDetailsMachine.id,
-        src: CheckoutFlowStates.PersonalDetailsStep,
-        input: ({ context }) => ({ initialData: context.personalDetails }),
+        src: 'personalDetailsMachine',
+        input: ({ context }) => ({ initialData: context.personalDetailsData }),
         onDone: {
           target: CheckoutFlowStates.ShippingAddressStep,
           actions: assign({
-            personalDetails: ({ event }) => event.output,
+            personalDetailsData: ({ event }) => event.output,
           }),
         },
       },
@@ -63,15 +63,21 @@ export const checkoutFlowMachine = setup({
     [CheckoutFlowStates.ShippingAddressStep]: {
       on: {
         BACK: CheckoutFlowStates.PersonalDetailsStep,
+        GO_TO_STEP: [
+          {
+            guard: ({ event }) => event.payload === CheckoutFlowStates.PersonalDetailsStep,
+            target: CheckoutFlowStates.PersonalDetailsStep,
+          },
+        ],
       },
       invoke: {
         id: shippingAddressMachine.id,
-        src: CheckoutFlowStates.ShippingAddressStep,
-        input: ({ context }) => ({ initialData: context.shippingAddress }),
+        src: 'shippingAddressMachine',
+        input: ({ context }) => ({ initialData: context.shippingAddressData }),
         onDone: {
           target: CheckoutFlowStates.PaymentDetailsStep,
           actions: assign({
-            shippingAddress: ({ event }) => event.output,
+            shippingAddressData: ({ event }) => event.output,
           }),
         },
       },
@@ -79,15 +85,25 @@ export const checkoutFlowMachine = setup({
     [CheckoutFlowStates.PaymentDetailsStep]: {
       on: {
         BACK: CheckoutFlowStates.ShippingAddressStep,
+        GO_TO_STEP: [
+          {
+            guard: ({ event }) => event.payload === CheckoutFlowStates.PersonalDetailsStep,
+            target: CheckoutFlowStates.PersonalDetailsStep,
+          },
+          {
+            guard: ({ event }) => event.payload === CheckoutFlowStates.ShippingAddressStep,
+            target: CheckoutFlowStates.ShippingAddressStep,
+          },
+        ],
       },
       invoke: {
         id: paymentDetailsMachine.id,
-        src: CheckoutFlowStates.PaymentDetailsStep,
-        input: ({ context }) => ({ initialData: context.paymentDetails }),
+        src: 'paymentDetailsMachine',
+        input: ({ context }) => ({ initialData: context.paymentDetailsData }),
         onDone: {
           target: CheckoutFlowStates.Completed,
           actions: assign({
-            paymentDetails: ({ event }) => event.output,
+            paymentDetailsData: ({ event }) => event.output,
           }),
         },
       },

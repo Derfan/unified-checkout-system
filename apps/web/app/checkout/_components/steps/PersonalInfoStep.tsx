@@ -13,7 +13,7 @@ import { StepControls } from '../StepControls';
 
 export const PersonalInfoStep = () => {
   const defaultValues = useCheckoutSelector(
-    useCallback((state) => state.context.personalDetails ?? {}, []),
+    useCallback((state) => state.context.personalDetailsData ?? {}, []),
   );
   const childActorRef = useCheckoutChildActorRef('personal-details');
 

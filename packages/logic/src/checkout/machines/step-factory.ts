@@ -105,8 +105,8 @@ export const createStepMachine = <TData, TOutput = TData>({
       },
       success: {
         type: 'final',
-        output: ({ context }) => context.data as TOutput,
       },
     },
+    output: ({ context }) => context.data as TOutput,
   });
 };

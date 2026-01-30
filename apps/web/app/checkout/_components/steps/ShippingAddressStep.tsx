@@ -13,7 +13,7 @@ import { StepControls } from '../StepControls';
 
 export const ShippingAddressStep = () => {
   const defaultValues = useCheckoutSelector(
-    useCallback((state) => state.context.shippingAddress ?? {}, []),
+    useCallback((state) => state.context.shippingAddressData ?? {}, []),
   );
   const childActorRef = useCheckoutChildActorRef('shipping-address');
 

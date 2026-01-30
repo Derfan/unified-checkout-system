@@ -7,11 +7,12 @@ interface StepCircleProps
   stepNumber: number;
 }
 
-export const StepCircle = ({ stepNumber, status, size, className }: StepCircleProps) => {
+export const StepCircle = ({ stepNumber, status, size, className, onClick }: StepCircleProps) => {
   return (
     <button
       className={cn(buttonVariants({ status, size, className }))}
       disabled={status === 'upcoming'}
+      onClick={onClick}
     >
       {stepNumber}
     </button>

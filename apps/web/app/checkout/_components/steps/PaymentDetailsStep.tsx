@@ -13,7 +13,7 @@ import { StepControls } from '../StepControls';
 
 export const PaymentDetailsStep = () => {
   const defaultValues = useCheckoutSelector(
-    useCallback((state) => state.context.paymentDetails ?? {}, []),
+    useCallback((state) => state.context.paymentDetailsData ?? {}, []),
   );
   const childActorRef = useCheckoutChildActorRef('payment-details');
 

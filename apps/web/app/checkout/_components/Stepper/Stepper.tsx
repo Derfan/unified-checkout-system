@@ -1,7 +1,7 @@
 'use client';
 
 import { CheckoutFlowStates } from '@repo/logic';
-import { useCheckoutSelector } from '../../../../hooks/checkout';
+import { useCheckoutSelector, useCheckoutActorRef } from '../../../../hooks/checkout';
 import { StepCircle } from './StepCircle';
 
 const STEPS = [
@@ -17,7 +17,7 @@ interface StepperProps {
 
 export const Stepper = ({ className }: StepperProps) => {
   const checkoutState = useCheckoutSelector((state) => state);
-
+  const checkoutActorRef = useCheckoutActorRef();
   const activeStepIndex = STEPS.findIndex((step) => checkoutState.matches(step.id));
 
   const getStepStatus = (index: number) => {
@@ -33,7 +33,11 @@ export const Stepper = ({ className }: StepperProps) => {
       <ul className="flex items-center justify-center gap-x-4">
         {STEPS.map((step, idx) => (
           <li key={step.id}>
-            <StepCircle stepNumber={idx + 1} status={getStepStatus(idx)} />
+            <StepCircle
+              stepNumber={idx + 1}
+              status={getStepStatus(idx)}
+              onClick={() => checkoutActorRef.send({ type: 'GO_TO_STEP', payload: step.id })}
+            />
           </li>
         ))}
       </ul>
