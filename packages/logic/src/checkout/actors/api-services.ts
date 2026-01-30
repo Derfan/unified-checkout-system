@@ -1,8 +1,6 @@
 import { PersonalDetails, PaymentDetails, Address } from '@repo/schema';
 
-const wait = async (ms: number = 1000) => {
-  new Promise((resolve) => setTimeout(resolve, ms));
-};
+const wait = async (ms: number = 1000) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const savePersonalDetails: (data: PersonalDetails) => Promise<PersonalDetails> = async (
   data,
