@@ -8,7 +8,7 @@ const STEPS = [
   { id: CheckoutFlowStates.PersonalDetailsStep, label: 'Your Information' },
   { id: CheckoutFlowStates.ShippingAddressStep, label: 'Shipping Address' },
   { id: CheckoutFlowStates.PaymentDetailsStep, label: 'Payment Details' },
-  { id: CheckoutFlowStates.Completed, label: 'Summary' },
+  { id: CheckoutFlowStates.ConfirmationStep, label: 'Summary' },
 ];
 
 interface StepperProps {
