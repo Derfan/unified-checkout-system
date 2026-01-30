@@ -12,7 +12,7 @@ export const StepControls = ({ nextLabel = 'Next Step' }: StepControlsProps) => 
   const actor = useCheckoutActorRef();
 
   return (
-    <div className="flex justify-between p-4 bg-white shadow-sm">
+    <div className="flex justify-between p-4 bg-white shadow-sm fixed bottom-0 left-0 right-0">
       {!state.matches(CheckoutFlowStates.PersonalDetailsStep) ? (
         <Button variant="tertiary" onClick={() => actor.send({ type: 'BACK' })}>
           Go Back

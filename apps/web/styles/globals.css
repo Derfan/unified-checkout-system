@@ -1,1 +1,14 @@
 @import 'tailwindcss';
+
+html,
+body {
+  height: 100%;
+  overflow: hidden; /* Prevents the body from scrolling */
+}
+
+.scrollable-main {
+  height: 100vh; /* Full viewport height */
+  overflow-y: auto; /* Enable vertical scrolling */
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling for iOS */
+}

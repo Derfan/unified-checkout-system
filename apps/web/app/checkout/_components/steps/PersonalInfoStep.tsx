@@ -36,8 +36,8 @@ export const PersonalInfoStep = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col grow">
-        <div className="grow px-4">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="relative mx-4 my-24">
           <Surface>
             <Heading>Personal Information</Heading>
 

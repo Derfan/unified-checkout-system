@@ -25,7 +25,7 @@ export interface FormFieldProps {
  */
 export const FormField = ({ id, label, children, errorMessage, className }: FormFieldProps) => {
   return (
-    <div className={cn('flex flex-col', className)}>
+    <div className={cn('w-full flex flex-col', className)}>
       <Label htmlFor={id} className="mb-1">
         {label}
       </Label>

@@ -21,7 +21,7 @@ export default function CheckoutLayout({
           <Image src={bgImage} alt="" role="presentation" priority className="w-full" />
         </div>
 
-        <main className="relative min-h-screen flex flex-col">{children}</main>
+        <main className="relative min-h-screen flex flex-col scrollable-main">{children}</main>
       </div>
     </CheckoutProvider>
   );

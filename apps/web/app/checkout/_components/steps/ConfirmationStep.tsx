@@ -40,12 +40,15 @@ export const ConfirmationStep = () => {
 
   return (
     <>
-      <div className="grow px-4">
+      <div className="relative mx-4 my-24">
         <Surface>
           <Heading>Confirmation</Heading>
 
           <Text className="mt-2">Please review your order details before confirming.</Text>
 
+          <pre className="mt-4">{JSON.stringify(values, null, 2)}</pre>
+          <pre className="mt-4">{JSON.stringify(values, null, 2)}</pre>
+          <pre className="mt-4">{JSON.stringify(values, null, 2)}</pre>
           <pre className="mt-4">{JSON.stringify(values, null, 2)}</pre>
         </Surface>
       </div>
