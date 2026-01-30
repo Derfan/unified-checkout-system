@@ -8,7 +8,7 @@ import { PaymentDetails, PaymentDetailsSchema } from '@repo/schema';
 import { useCheckoutChildActorRef, useCheckoutSelector } from '../../../../hooks/checkout';
 import { Row } from '../../../../components/layout';
 import { Surface, Heading, Text } from '../../../../components/ui';
-import { FormField, Input, CardInput } from '../../../../components/forms';
+import { FormField, Input, CardInput, ExpiryInput } from '../../../../components/forms';
 import { StepControls } from '../StepControls';
 
 export const PaymentDetailsStep = () => {
@@ -67,7 +67,7 @@ export const PaymentDetailsStep = () => {
                 className="mt-2"
                 errorMessage={errors.expiryDate?.message}
               >
-                <Input placeholder="e.g. 12/34" {...register('expiryDate')} />
+                <ExpiryInput placeholder="e.g. 12/34" {...register('expiryDate')} />
               </FormField>
 
               <FormField id="cvv" label="CVV" className="mt-2" errorMessage={errors.cvv?.message}>

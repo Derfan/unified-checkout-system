@@ -50,17 +50,22 @@ export const PaymentDetailsSchema = z.object({
   expiryDate: z
     .string()
     .min(1, 'Required')
-    .regex(/^(0[1-9]|1[0-2])\/?([0-9]{2})$/, 'Invalid format (MM/YY)')
-    .refine((val) => {
-      const parts = val.split('/');
-      const month = parts[0] ? parseInt(parts[0]) : 0;
-      const year = parts[1] ? parseInt(parts[1]) : 0;
-      const now = new Date();
-      const currentYear = now.getFullYear() % 100;
-      const currentMonth = now.getMonth() + 1;
+    .transform((val) => val.replace(/\s/g, ''))
+    .pipe(
+      z
+        .string()
+        .regex(/^(0[1-9]|1[0-2])\/?([0-9]{2})$/, 'Invalid format (MM/YY)')
+        .refine((val) => {
+          const parts = val.split('/');
+          const month = parts[0] ? parseInt(parts[0]) : 0;
+          const year = parts[1] ? parseInt(parts[1]) : 0;
+          const now = new Date();
+          const currentYear = now.getFullYear() % 100;
+          const currentMonth = now.getMonth() + 1;
 
-      return year > currentYear || (year === currentYear && month >= currentMonth);
-    }, 'Card expired'),
+          return year > currentYear || (year === currentYear && month >= currentMonth);
+        }, 'Card expired'),
+    ),
   cvv: z.string().min(1, 'Required').regex(CVV_PATTERN, 'Must be 3-4 digits'),
 });
 
