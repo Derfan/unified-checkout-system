@@ -20,6 +20,13 @@ type CheckoutFlowEvent = { type: 'BACK' };
 
 type CheckoutFlowOutput = DeepNonNullable<CheckoutFlowContext>;
 
+export enum CheckoutFlowStates {
+  PersonalDetailsStep = 'personalDetailsStep',
+  ShippingAddressStep = 'shippingAddressStep',
+  PaymentDetailsStep = 'paymentDetailsStep',
+  Completed = 'completed',
+}
+
 export const checkoutFlowMachine = setup({
   types: {} as {
     context: CheckoutFlowContext;
@@ -27,9 +34,9 @@ export const checkoutFlowMachine = setup({
     output: CheckoutFlowOutput;
   },
   actors: {
-    personalDetailsStep: personalDetailsMachine,
-    shippingAddressStep: shippingAddressMachine,
-    paymentDetailsStep: paymentDetailsMachine,
+    [CheckoutFlowStates.PersonalDetailsStep]: personalDetailsMachine,
+    [CheckoutFlowStates.ShippingAddressStep]: shippingAddressMachine,
+    [CheckoutFlowStates.PaymentDetailsStep]: paymentDetailsMachine,
   },
 }).createMachine({
   id: 'checkout-flow',
@@ -38,54 +45,54 @@ export const checkoutFlowMachine = setup({
     shippingAddress: null,
     paymentDetails: null,
   },
-  initial: 'personalDetailsStep',
+  initial: CheckoutFlowStates.PersonalDetailsStep,
   states: {
-    personalDetailsStep: {
+    [CheckoutFlowStates.PersonalDetailsStep]: {
       invoke: {
         id: personalDetailsMachine.id,
-        src: 'personalDetailsStep',
+        src: CheckoutFlowStates.PersonalDetailsStep,
         input: ({ context }) => ({ initialData: context.personalDetails }),
         onDone: {
-          target: 'shippingAddressStep',
+          target: CheckoutFlowStates.ShippingAddressStep,
           actions: assign({
             personalDetails: ({ event }) => event.output,
           }),
         },
       },
     },
-    shippingAddressStep: {
+    [CheckoutFlowStates.ShippingAddressStep]: {
       on: {
-        BACK: 'personalDetailsStep',
+        BACK: CheckoutFlowStates.PersonalDetailsStep,
       },
       invoke: {
         id: shippingAddressMachine.id,
-        src: 'shippingAddressStep',
+        src: CheckoutFlowStates.ShippingAddressStep,
         input: ({ context }) => ({ initialData: context.shippingAddress }),
         onDone: {
-          target: 'paymentDetailsStep',
+          target: CheckoutFlowStates.PaymentDetailsStep,
           actions: assign({
             shippingAddress: ({ event }) => event.output,
           }),
         },
       },
     },
-    paymentDetailsStep: {
+    [CheckoutFlowStates.PaymentDetailsStep]: {
       on: {
-        BACK: 'shippingAddressStep',
+        BACK: CheckoutFlowStates.ShippingAddressStep,
       },
       invoke: {
         id: paymentDetailsMachine.id,
-        src: 'paymentDetailsStep',
+        src: CheckoutFlowStates.PaymentDetailsStep,
         input: ({ context }) => ({ initialData: context.paymentDetails }),
         onDone: {
-          target: 'completed',
+          target: CheckoutFlowStates.Completed,
           actions: assign({
             paymentDetails: ({ event }) => event.output,
           }),
         },
       },
     },
-    completed: {
+    [CheckoutFlowStates.Completed]: {
       type: 'final',
       output: ({ context }) => context,
     },

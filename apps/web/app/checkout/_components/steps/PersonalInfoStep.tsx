@@ -1,25 +1,43 @@
 'use client';
 
+import { useCallback } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { PersonaTitles, PersonalDetails, PersonalDetailsSchema } from '@repo/schema';
 
+import { useCheckoutSelector } from '../../../../hooks/checkout';
 import { Row } from '../../../../components/layout';
 import { Surface, Heading, Text } from '../../../../components/ui';
 import { FormField, RadioGroup, Input, PhoneInput } from '../../../../components/forms';
 import { StepControls } from '../StepControls';
 
 export const PersonalInfoStep = () => {
+  const { defaultValues, actor } = useCheckoutSelector(
+    useCallback(
+      (state) => ({
+        defaultValues: state.context.personalDetails ?? {},
+        actor: state.children['personal-details'],
+      }),
+      [],
+    ),
+  );
+
   const {
     handleSubmit,
     register,
     control,
     formState: { errors },
-  } = useForm<PersonalDetails>({ resolver: zodResolver(PersonalDetailsSchema) });
+  } = useForm<PersonalDetails>({
+    resolver: zodResolver(PersonalDetailsSchema),
+    defaultValues,
+  });
 
-  const onSubmit = (data: PersonalDetails) => {
-    console.log('Personal Details Submitted:', data);
-  };
+  const onSubmit = useCallback(
+    (data: PersonalDetails) => {
+      actor?.send({ type: 'SUBMIT', payload: data });
+    },
+    [actor],
+  );
 
   return (
     <>

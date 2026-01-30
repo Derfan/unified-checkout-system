@@ -1,10 +1,14 @@
+'use client';
+
+import { CheckoutFlowStates } from '@repo/logic';
+import { useCheckoutSelector } from '../../../../hooks/checkout';
 import { StepCircle } from './StepCircle';
 
 const STEPS = [
-  { id: 'personal-details', label: 'Your Information' },
-  { id: 'shipping-address', label: 'Shipping Address' },
-  { id: 'payment-details', label: 'Payment Details' },
-  { id: 'confirmation', label: 'Summary' },
+  { id: CheckoutFlowStates.PersonalDetailsStep, label: 'Your Information' },
+  { id: CheckoutFlowStates.ShippingAddressStep, label: 'Shipping Address' },
+  { id: CheckoutFlowStates.PaymentDetailsStep, label: 'Payment Details' },
+  { id: CheckoutFlowStates.Completed, label: 'Summary' },
 ];
 
 interface StepperProps {
@@ -12,7 +16,9 @@ interface StepperProps {
 }
 
 export const Stepper = ({ className }: StepperProps) => {
-  const activeStepIndex = 1; // Example: hardcoded active step index
+  const checkoutState = useCheckoutSelector((state) => state);
+
+  const activeStepIndex = STEPS.findIndex((step) => checkoutState.matches(step.id));
 
   const getStepStatus = (index: number) => {
     if (index < activeStepIndex) return 'completed';
