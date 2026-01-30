@@ -8,7 +8,7 @@ import { PaymentDetails, PaymentDetailsSchema } from '@repo/schema';
 import { useCheckoutChildActorRef, useCheckoutSelector } from '../../../../hooks/checkout';
 import { Row } from '../../../../components/layout';
 import { Surface, Heading, Text } from '../../../../components/ui';
-import { FormField, Input } from '../../../../components/forms';
+import { FormField, Input, CardInput } from '../../../../components/forms';
 import { StepControls } from '../StepControls';
 
 export const PaymentDetailsStep = () => {
@@ -57,7 +57,7 @@ export const PaymentDetailsStep = () => {
               className="mt-2"
               errorMessage={errors.cardNumber?.message}
             >
-              <Input placeholder="e.g. 1234 5678 9012 3456" {...register('cardNumber')} />
+              <CardInput placeholder="e.g. 1234 5678 9012 3456" {...register('cardNumber')} />
             </FormField>
 
             <Row space="sm" className="mt-2">

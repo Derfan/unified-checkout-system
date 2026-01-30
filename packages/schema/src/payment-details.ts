@@ -33,9 +33,13 @@ export const PaymentDetailsSchema = z.object({
   cardNumber: z
     .string()
     .min(1, 'Required')
-    .regex(CARD_NUMBER_PATTERN, 'Invalid card number')
-    .refine(verifyCardNumber, 'Invalid card number')
-    .transform((val) => val.replace(/\s/g, '')),
+    .transform((val) => val.replace(/\s/g, ''))
+    .pipe(
+      z
+        .string()
+        .regex(CARD_NUMBER_PATTERN, 'Invalid card number')
+        .refine(verifyCardNumber, 'Invalid card number'),
+    ),
   cardHolderName: z
     .string()
     .min(1, 'Required')
