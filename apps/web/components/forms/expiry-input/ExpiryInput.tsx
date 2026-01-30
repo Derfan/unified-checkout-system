@@ -25,7 +25,9 @@ export const ExpiryInput = React.forwardRef<HTMLInputElement, InputProps>((props
     props?.onChange?.(event);
   };
 
-  return <Input inputMode="numeric" ref={ref} {...props} onChange={handleChange} />;
+  return (
+    <Input inputMode="numeric" autoComplete="cc-exp" ref={ref} {...props} onChange={handleChange} />
+  );
 });
 
 ExpiryInput.displayName = 'ExpiryInput';

@@ -5,30 +5,30 @@ import React from 'react';
 import { Input, type InputProps } from '../input';
 
 /**
- * Custom formatter for Credit Card: #### #### #### ####
+ * Custom formatter for CVV: ### or ####
  */
-const formatCardNumber = (value: string) => {
+const formatCVV = (value: string) => {
   const digits = value.replace(/\D/g, '');
-  const trimmed = digits.slice(0, 16);
 
-  return trimmed.match(/.{1,4}/g)?.join(' ') || trimmed;
+  return digits.slice(0, 4);
 };
 
 /**
  * CardInput component that formats card numbers dynamically as the user types.
  */
-export const CardInput = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
+export const CvvInput = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const input = event.target.value;
 
-    event.target.value = formatCardNumber(input);
+    event.target.value = formatCVV(input);
     props?.onChange?.(event);
   };
 
   return (
     <Input
       inputMode="numeric"
-      autoComplete="cc-number"
+      autoComplete="cc-csc"
+      maxLength={4}
       ref={ref}
       {...props}
       onChange={handleChange}
@@ -36,4 +36,4 @@ export const CardInput = React.forwardRef<HTMLInputElement, InputProps>((props, 
   );
 });
 
-CardInput.displayName = 'CardInput';
+CvvInput.displayName = 'CvvInput';

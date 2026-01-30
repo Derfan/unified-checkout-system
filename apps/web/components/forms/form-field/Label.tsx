@@ -15,7 +15,7 @@ export const Label = ({ className, ...props }: LabelProps) => {
   return <label className={cn(labelVariants({ className }))} {...props} />;
 };
 
-const labelVariants = cva('text-label', {
+const labelVariants = cva('text-sm', {
   variants: {},
   defaultVariants: {},
 });
