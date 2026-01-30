@@ -14,6 +14,7 @@ export enum CheckoutFlowStates {
   PersonalDetailsStep = 'personalDetailsStep',
   ShippingAddressStep = 'shippingAddressStep',
   PaymentDetailsStep = 'paymentDetailsStep',
+  ConfirmationStep = 'confirmationStep',
   Completed = 'completed',
 }
 
@@ -101,16 +102,37 @@ export const checkoutFlowMachine = setup({
         src: 'paymentDetailsMachine',
         input: ({ context }) => ({ initialData: context.paymentDetailsData }),
         onDone: {
-          target: CheckoutFlowStates.Completed,
+          target: CheckoutFlowStates.ConfirmationStep,
           actions: assign({
             paymentDetailsData: ({ event }) => event.output,
           }),
         },
       },
     },
-    [CheckoutFlowStates.Completed]: {
-      type: 'final',
+    [CheckoutFlowStates.ConfirmationStep]: {
+      on: {
+        SUBMIT: CheckoutFlowStates.Completed,
+        BACK: CheckoutFlowStates.PaymentDetailsStep,
+        GO_TO_STEP: [
+          {
+            guard: ({ event }) => event.payload === CheckoutFlowStates.PersonalDetailsStep,
+            target: CheckoutFlowStates.PersonalDetailsStep,
+          },
+          {
+            guard: ({ event }) => event.payload === CheckoutFlowStates.ShippingAddressStep,
+            target: CheckoutFlowStates.ShippingAddressStep,
+          },
+          {
+            guard: ({ event }) => event.payload === CheckoutFlowStates.PaymentDetailsStep,
+            target: CheckoutFlowStates.PaymentDetailsStep,
+          },
+        ],
+      },
       output: ({ context }) => context,
     },
+    [CheckoutFlowStates.Completed]: {
+      type: 'final',
+    },
   },
+  output: ({ context }) => context as CheckoutFlowOutput,
 });

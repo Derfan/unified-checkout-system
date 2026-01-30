@@ -52,6 +52,7 @@ describe('Checkout Flow Orchestrator', () => {
 
     expect(actor.getSnapshot().status).toBe('active');
     expect(actor.getSnapshot().value).toBe('shippingAddressStep');
+    expect(actor.getSnapshot().context.personalDetailsData).toEqual(validPersonalDetails);
 
     // --- STEP 2: Shipping Address ---
     const shippingAddressActor = actor.getSnapshot().children['shipping-address'];
@@ -62,6 +63,7 @@ describe('Checkout Flow Orchestrator', () => {
 
     expect(actor.getSnapshot().status).toBe('active');
     expect(actor.getSnapshot().value).toBe('paymentDetailsStep');
+    expect(actor.getSnapshot().context.shippingAddressData).toEqual(validShippingAddress);
 
     // --- STEP 3: Payment Details ---
     const paymentDetailsActor = actor.getSnapshot().children['payment-details'];
@@ -70,8 +72,20 @@ describe('Checkout Flow Orchestrator', () => {
     // Wait for promise to resolve
     await new Promise((resolve) => setTimeout(resolve, 0));
 
+    expect(actor.getSnapshot().status).toBe('active');
+    expect(actor.getSnapshot().value).toBe('confirmationStep');
+    expect(actor.getSnapshot().context.paymentDetailsData).toEqual(validPaymentDetails);
+
+    // --- STEP 4: Confirmation ---
+    actor.send({ type: 'SUBMIT' });
+
     expect(actor.getSnapshot().status).toBe('done');
     expect(actor.getSnapshot().value).toBe('completed');
+    expect(actor.getSnapshot().output).toEqual({
+      personalDetailsData: validPersonalDetails,
+      shippingAddressData: validShippingAddress,
+      paymentDetailsData: validPaymentDetails,
+    });
   });
 
   it('should navigate back to previous steps correctly', async () => {
