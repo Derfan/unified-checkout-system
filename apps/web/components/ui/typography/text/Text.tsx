@@ -6,8 +6,21 @@ import { cn } from '../../../../styles/utils';
 export interface TextProps
   extends React.HTMLAttributes<HTMLParagraphElement>, VariantProps<typeof textVariants> {}
 
-export const Text = ({ variant, size, align, className, ...props }: TextProps) => {
-  return <p className={cn(textVariants({ variant, size, align, className }))} {...props} />;
+export const Text = ({
+  variant,
+  size,
+  align,
+  uppercase,
+  weight,
+  className,
+  ...props
+}: TextProps) => {
+  return (
+    <p
+      className={cn(textVariants({ variant, size, align, uppercase, weight, className }))}
+      {...props}
+    />
+  );
 };
 
 const textVariants = cva('', {
@@ -26,10 +39,20 @@ const textVariants = cva('', {
       center: 'text-center',
       right: 'text-right',
     },
+    uppercase: {
+      true: 'uppercase',
+      false: '',
+    },
+    weight: {
+      bold: 'font-bold',
+      normal: 'font-normal',
+    },
   },
   defaultVariants: {
     variant: 'primary',
     size: 'md',
     align: 'left',
+    uppercase: false,
+    weight: 'normal',
   },
 });

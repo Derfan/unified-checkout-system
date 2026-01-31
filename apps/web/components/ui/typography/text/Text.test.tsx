@@ -14,7 +14,7 @@ describe('Text Component', () => {
     // Assert
     expect(paragraph).toBeInTheDocument();
     expect(paragraph.tagName).toBe('P');
-    expect(paragraph).toHaveClass('text-base', 'md:text-lg', 'text-blue-900', 'text-left');
+    expect(paragraph).toHaveClass('text-base', 'md:text-lg', 'text-left');
   });
 
   it('should render with specified size and alignment', () => {

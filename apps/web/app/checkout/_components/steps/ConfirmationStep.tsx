@@ -3,18 +3,11 @@
 import { useCallback } from 'react';
 
 import { useCheckoutSelector } from '../../../../hooks/checkout';
-import { Surface, Heading, Text } from '../../../../components/ui';
+import { Surface, Heading, Text, Divider } from '../../../../components/ui';
 import { StepControls } from '../StepControls';
 
-const formatDate = (dateString: string) => {
-  const date = new Date(dateString);
-
-  return date.toLocaleDateString('en', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  });
-};
+// TODO: Move to utils
+const capitalize = (str: string) => `${str.charAt(0).toUpperCase()}${str.slice(1).toLowerCase()}`;
 
 export const ConfirmationStep = () => {
   const values = useCheckoutSelector(
@@ -23,15 +16,17 @@ export const ConfirmationStep = () => {
       const shippingAddress = state.context.shippingAddressData;
 
       return {
-        fullName: [personalDetails?.title, personalDetails?.firstName, personalDetails?.lastName]
+        fullName: [
+          personalDetails?.title ? `${capitalize(personalDetails.title)}.` : null,
+          personalDetails?.firstName,
+          personalDetails?.lastName,
+        ]
           .filter(Boolean)
           .join(' '),
-        dob: personalDetails?.dateOfBirth ? formatDate(personalDetails?.dateOfBirth) : null,
         email: personalDetails?.email,
         phoneNumber: personalDetails?.phoneNumber,
         addressLine1: [shippingAddress?.street, shippingAddress?.houseNumber].join(', '),
         addressLine2: [shippingAddress?.postalCode, shippingAddress?.city].join(', '),
-        country: shippingAddress?.country,
       };
     }, []),
   );
@@ -48,7 +43,7 @@ export const ConfirmationStep = () => {
 
           <div className="bg-blue-50 p-4 mt-4 rounded-md gap-y-4 flex flex-col">
             <div>
-              <Text variant="secondary" size="sm" className="mb-1">
+              <Text variant="secondary" size="sm" className="mb-1" uppercase>
                 Shipping To
               </Text>
               <Text>{values.fullName}</Text>
@@ -56,10 +51,10 @@ export const ConfirmationStep = () => {
               <Text>{values.addressLine2}</Text>
             </div>
 
-            <div className="border-b border-b-slate-300" />
+            <Divider />
 
             <div>
-              <Text variant="secondary" size="sm">
+              <Text variant="secondary" size="sm" className="mb-1" uppercase>
                 Contact
               </Text>
               <Text>{values.phoneNumber}</Text>
