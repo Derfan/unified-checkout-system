@@ -18,9 +18,13 @@ export const CheckoutController = () => {
     if (checkoutState.matches(CheckoutFlowStates.ShippingAddressStep))
       return <ShippingAddressStep />;
     if (checkoutState.matches(CheckoutFlowStates.PaymentDetailsStep)) return <PaymentDetailsStep />;
-    if (checkoutState.matches(CheckoutFlowStates.ConfirmationStep)) return <ConfirmationStep />;
+    if (
+      checkoutState.matches(CheckoutFlowStates.ConfirmationStep) ||
+      checkoutState.matches(CheckoutFlowStates.Completed)
+    )
+      return <ConfirmationStep />;
 
-    return <div className="p-10 text-center">Loading your checkout...</div>;
+    return null;
   };
 
   return renderStep();

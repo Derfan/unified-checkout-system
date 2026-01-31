@@ -20,7 +20,7 @@ export const StepCircle = ({ stepNumber, status, size, className, onClick }: Ste
 };
 
 const buttonVariants = cva(
-  'rounded-full font-bold transition-transform focus-visible:outline-none disabled:pointer-events-none disabled:opacity-60',
+  'rounded-full font-bold transition focus-visible:outline-none disabled:pointer-events-none disabled:opacity-60',
   {
     variants: {
       status: {

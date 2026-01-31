@@ -40,7 +40,9 @@ export const PaymentDetailsStep = () => {
           <Surface>
             <Heading>Payment Details</Heading>
 
-            <Text className="mt-2">Please provide your payment details for the order.</Text>
+            <Text variant="secondary" className="mt-2">
+              Please provide your payment details for the order.
+            </Text>
 
             <FormField
               id="cardHolderName"

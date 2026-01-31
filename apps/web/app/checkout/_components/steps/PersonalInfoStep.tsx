@@ -41,7 +41,9 @@ export const PersonalInfoStep = () => {
           <Surface>
             <Heading>Personal Information</Heading>
 
-            <Text className="mt-2">Please provide your personal details for the order.</Text>
+            <Text variant="secondary" className="mt-2">
+              Please provide your personal details for the order.
+            </Text>
 
             <FormField label="Title" className="mt-4" errorMessage={errors.title?.message}>
               <Controller

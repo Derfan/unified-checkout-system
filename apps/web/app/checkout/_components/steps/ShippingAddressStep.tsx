@@ -40,7 +40,9 @@ export const ShippingAddressStep = () => {
           <Surface>
             <Heading>Shipping Address</Heading>
 
-            <Text className="mt-2">Please provide your shipping address for the order.</Text>
+            <Text variant="secondary" className="mt-2">
+              Please provide your shipping address for the order.
+            </Text>
 
             <Row space="sm" className="mt-4">
               <FormField id="street" label="Street" errorMessage={errors.street?.message}>

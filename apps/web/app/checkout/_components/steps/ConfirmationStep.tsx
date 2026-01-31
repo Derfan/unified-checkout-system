@@ -21,19 +21,17 @@ export const ConfirmationStep = () => {
     useCallback((state) => {
       const personalDetails = state.context.personalDetailsData;
       const shippingAddress = state.context.shippingAddressData;
-      const paymentDetails = state.context.paymentDetailsData;
 
       return {
         fullName: [personalDetails?.title, personalDetails?.firstName, personalDetails?.lastName]
           .filter(Boolean)
           .join(' '),
-        dob: formatDate(personalDetails?.dateOfBirth),
+        dob: personalDetails?.dateOfBirth ? formatDate(personalDetails?.dateOfBirth) : null,
         email: personalDetails?.email,
         phoneNumber: personalDetails?.phoneNumber,
-        addressLine1: [shippingAddress.street, shippingAddress.houseNumber].join(', '),
-        addressLine2: [shippingAddress.city, shippingAddress.postalCode].join(', '),
+        addressLine1: [shippingAddress?.street, shippingAddress?.houseNumber].join(', '),
+        addressLine2: [shippingAddress?.postalCode, shippingAddress?.city].join(', '),
         country: shippingAddress?.country,
-        paymentDetails,
       };
     }, []),
   );
@@ -44,12 +42,30 @@ export const ConfirmationStep = () => {
         <Surface>
           <Heading>Confirmation</Heading>
 
-          <Text className="mt-2">Please review your order details before confirming.</Text>
+          <Text variant="secondary" className="mt-2">
+            Please review your order details before confirming.
+          </Text>
 
-          <pre className="mt-4">{JSON.stringify(values, null, 2)}</pre>
-          <pre className="mt-4">{JSON.stringify(values, null, 2)}</pre>
-          <pre className="mt-4">{JSON.stringify(values, null, 2)}</pre>
-          <pre className="mt-4">{JSON.stringify(values, null, 2)}</pre>
+          <div className="bg-blue-50 p-4 mt-4 rounded-md gap-y-4 flex flex-col">
+            <div>
+              <Text variant="secondary" size="sm" className="mb-1">
+                Shipping To
+              </Text>
+              <Text>{values.fullName}</Text>
+              <Text>{values.addressLine1}</Text>
+              <Text>{values.addressLine2}</Text>
+            </div>
+
+            <div className="border-b border-b-slate-300" />
+
+            <div>
+              <Text variant="secondary" size="sm">
+                Contact
+              </Text>
+              <Text>{values.phoneNumber}</Text>
+              <Text>{values.email}</Text>
+            </div>
+          </div>
         </Surface>
       </div>
 
