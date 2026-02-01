@@ -1,11 +1,43 @@
 import { z } from 'zod';
 
+export const PersonaTitles = {
+  Mr: 'mr',
+  Mrs: 'mrs',
+  Ms: 'ms',
+  Dr: 'dr',
+  Prof: 'prof',
+} as const;
+
+const NAME_PATTERN = /^[a-zA-Z\s'.-]+$/;
+const PHONE_PATTERN = /^[\d\s+()-]+$/;
+
 export const PersonalDetailsSchema = z.object({
-  title: z.enum(['Mr', 'Mrs', 'Ms', 'Dr', 'Prof']).optional(),
-  firstName: z.string().min(1, 'First name is required'),
-  lastName: z.string().min(1, 'Last name is required'),
-  dateOfBirth: z.date(),
-  email: z.email('Invalid email address'),
+  title: z.enum(Object.values(PersonaTitles), 'Required'),
+  firstName: z
+    .string()
+    .min(1, 'Required')
+    .min(2, 'At least 2 characters')
+    .max(50, 'Max 50 characters')
+    .regex(NAME_PATTERN, 'Invalid characters')
+    .transform((val) => val.trim()),
+  lastName: z
+    .string()
+    .min(1, 'Required')
+    .min(2, 'At least 2 characters')
+    .max(50, 'Max 50 characters')
+    .regex(NAME_PATTERN, 'Invalid characters')
+    .transform((val) => val.trim()),
+  email: z
+    .email('Invalid email')
+    .min(1, 'Required')
+    .max(254, 'Max 254 characters')
+    .transform((val) => val.toLowerCase().trim()),
+  phoneNumber: z
+    .string()
+    .min(1, 'Required')
+    .min(10, 'Min 10 digits')
+    .max(20, 'Max 20 characters')
+    .regex(PHONE_PATTERN, 'Invalid format'),
 });
 
 export type PersonalDetails = z.infer<typeof PersonalDetailsSchema>;

@@ -1,3 +1,4 @@
+import { ActorRefFrom } from 'xstate';
 import { PersonalDetailsSchema } from '@repo/schema';
 import type { PersonalDetails } from '@repo/schema';
 
@@ -9,3 +10,5 @@ export const personalDetailsMachine = createStepMachine<PersonalDetails>({
   schema: PersonalDetailsSchema,
   saveData: savePersonalDetails,
 });
+
+export type PersonalDetailsActorRef = ActorRefFrom<typeof personalDetailsMachine>;

@@ -1,1 +1,1 @@
-export { checkoutFlowMachine } from './machines/checkout-flow';
+export * from './machines';
