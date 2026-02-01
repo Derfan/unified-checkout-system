@@ -6,6 +6,7 @@ import { PersonaTitles, PersonalDetails, PersonalDetailsSchema } from '@repo/sch
 import { useCheckoutStep } from '@repo/logic/react';
 
 import { Row } from '../../../../components/layout';
+import { Heading, Text } from '../../../../components/ui';
 import { FormField, RadioGroup, Input, PhoneInput } from '../../../../components/forms';
 import { StepWrapper } from '../StepWrapper';
 
@@ -23,13 +24,14 @@ export const PersonalInfoStep = () => {
   });
 
   return (
-    <StepWrapper
-      title="Personal Information"
-      description="Please provide your personal details for the order."
-      submitting={state.submitting}
-      onSubmit={handleSubmit(submit)}
-    >
-      <FormField label="Title" errorMessage={errors.title?.message}>
+    <StepWrapper submitting={state.submitting} onSubmit={handleSubmit(submit)}>
+      <Heading>Personal Information</Heading>
+
+      <Text variant="secondary" className="mt-2">
+        Please provide your personal details for the order.
+      </Text>
+
+      <FormField label="Title" className="mt-4" errorMessage={errors.title?.message}>
         <Controller
           name="title"
           control={control}

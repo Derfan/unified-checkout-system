@@ -3,7 +3,7 @@
 import { useCallback } from 'react';
 import { useCheckoutSelector, useCheckoutActorRef } from '@repo/logic/react';
 
-import { Text, Divider } from '../../../../components/ui';
+import { Text, Divider, Heading } from '../../../../components/ui';
 import { StepWrapper } from '../StepWrapper';
 import { StepControls } from '../StepControls';
 
@@ -38,11 +38,14 @@ export const ConfirmationStep = () => {
   }, [checkoutActorRef]);
 
   return (
-    <StepWrapper
-      title="Confirmation"
-      description="Please review your order details before confirming."
-    >
-      <div className="bg-blue-50 p-4 rounded-md gap-y-4 flex flex-col">
+    <StepWrapper>
+      <Heading>Confirmation</Heading>
+
+      <Text variant="secondary" className="mt-2">
+        Please review your order details before confirming.
+      </Text>
+
+      <div className="bg-blue-50 p-4 rounded-md gap-y-4 flex flex-col mt-4">
         <div>
           <Text variant="secondary" size="sm" className="mb-1" uppercase>
             Shipping To

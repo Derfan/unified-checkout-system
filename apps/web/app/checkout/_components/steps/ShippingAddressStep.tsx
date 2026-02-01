@@ -5,6 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Address, AddressSchema } from '@repo/schema';
 import { useCheckoutStep } from '@repo/logic/react';
 
+import { Heading, Text } from '../../../../components/ui';
 import { Row } from '../../../../components/layout';
 import { FormField, Input } from '../../../../components/forms';
 import { StepWrapper } from '../StepWrapper';
@@ -22,13 +23,14 @@ export const ShippingAddressStep = () => {
   });
 
   return (
-    <StepWrapper
-      title="Shipping Address"
-      description="Please provide your shipping address for the order."
-      submitting={state.submitting}
-      onSubmit={handleSubmit(submit)}
-    >
-      <Row space="sm">
+    <StepWrapper submitting={state.submitting} onSubmit={handleSubmit(submit)}>
+      <Heading>Shipping Address</Heading>
+
+      <Text variant="secondary" className="mt-2">
+        Please provide your shipping address for the order.
+      </Text>
+
+      <Row space="sm" className="mt-4">
         <FormField
           id="street"
           label="Street"

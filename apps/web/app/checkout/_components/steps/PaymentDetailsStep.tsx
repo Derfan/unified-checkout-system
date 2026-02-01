@@ -6,6 +6,7 @@ import { PaymentDetails, PaymentDetailsSchema } from '@repo/schema';
 import { useCheckoutStep } from '@repo/logic/react';
 
 import { Row } from '../../../../components/layout';
+import { Heading, Text } from '../../../../components/ui';
 import { FormField, Input, CardInput, ExpiryInput, CvvInput } from '../../../../components/forms';
 import { StepWrapper } from '../StepWrapper';
 
@@ -22,15 +23,17 @@ export const PaymentDetailsStep = () => {
   });
 
   return (
-    <StepWrapper
-      title="Payment Details"
-      description="Please provide your payment details for the order."
-      submitting={state.submitting}
-      onSubmit={handleSubmit(submit)}
-    >
+    <StepWrapper submitting={state.submitting} onSubmit={handleSubmit(submit)}>
+      <Heading>Payment Details</Heading>
+
+      <Text variant="secondary" className="mt-2 mb-4">
+        Please provide your payment details for the order.
+      </Text>
+
       <FormField
         id="cardHolderName"
         label="Card Holder Name"
+        className="mt-4"
         errorMessage={errors.cardHolderName?.message}
       >
         <Input placeholder="e.g. John Doe" autoComplete="cc-name" {...register('cardHolderName')} />
