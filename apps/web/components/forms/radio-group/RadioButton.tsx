@@ -27,16 +27,19 @@ export const RadioButton = React.forwardRef<HTMLLabelElement, RadioButtonProps>(
 
 RadioButton.displayName = 'RadioButton';
 
-const radioButtonVariants = cva('flex-1 text-center border p-2 rounded transition-colors', {
-  variants: {
-    state: {
-      default: 'border-gray-300 hover:border-blue-500 focus:border-blue-700',
-      selected: 'border-blue-700 bg-blue-100',
-      error: 'border-red-500 hover:border-red-700 focus:border-red-700',
-      disabled: 'bg-gray-100 cursor-not-allowed',
+const radioButtonVariants = cva(
+  'flex-1 text-center border p-2 rounded transition-colors cursor-pointer',
+  {
+    variants: {
+      state: {
+        default: 'border-gray-300 hover:border-blue-500 focus:border-blue-700',
+        selected: 'border-blue-700 bg-blue-100',
+        error: 'border-red-500 hover:border-red-700 focus:border-red-700',
+        disabled: 'bg-gray-100 cursor-not-allowed',
+      },
+    },
+    defaultVariants: {
+      state: 'default',
     },
   },
-  defaultVariants: {
-    state: 'default',
-  },
-});
+);

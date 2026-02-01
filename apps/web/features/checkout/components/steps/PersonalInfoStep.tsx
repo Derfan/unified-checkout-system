@@ -6,9 +6,9 @@ import { PersonaTitles, PersonalDetailsSchema } from '@repo/schema';
 import { CheckoutFlowStates } from '@repo/logic';
 import { useCheckoutStep } from '@repo/logic/react';
 
-import { Row } from '../../../../components/layout';
-import { Heading, Text } from '../../../../components/ui';
-import { FormField, RadioGroup, Input, PhoneInput } from '../../../../components/forms';
+import { Heading, Text } from '@components/ui';
+import { Row } from '@components/layout';
+import { FormField, Input, RadioGroup, PhoneInput } from '@components/forms';
 
 export const PersonalInfoStep = () => {
   const { state, submit } = useCheckoutStep('personal-details');

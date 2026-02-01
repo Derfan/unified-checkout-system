@@ -1,4 +1,4 @@
-import type { CheckoutFlowStates } from '../../../checkout';
+import type { CheckoutFlowStates } from '../../../core';
 import { CheckoutContext } from '../context';
 
 export const useCheckoutActorRef = () => CheckoutContext.useActorRef();

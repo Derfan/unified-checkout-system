@@ -4,7 +4,7 @@ import { useCallback } from 'react';
 import { CheckoutFlowStates } from '@repo/logic';
 import { useCheckoutSelector, useCheckoutActorRef } from '@repo/logic/react';
 
-import { Text, Divider, Heading } from '../../../../components/ui';
+import { Text, Divider, Heading } from '@components/ui';
 
 // TODO: Move to utils
 const capitalize = (str: string) => `${str.charAt(0).toUpperCase()}${str.slice(1).toLowerCase()}`;

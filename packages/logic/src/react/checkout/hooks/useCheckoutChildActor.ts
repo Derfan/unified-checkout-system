@@ -2,7 +2,7 @@ import type {
   PersonalDetailsActorRef,
   ShippingAddressActorRef,
   PaymentDetailsActorRef,
-} from '../../../checkout';
+} from '../../../core';
 import { useCheckoutSelector } from './useCheckout';
 
 export type StepActorRef =

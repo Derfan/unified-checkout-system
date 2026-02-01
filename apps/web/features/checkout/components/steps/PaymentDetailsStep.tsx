@@ -6,9 +6,9 @@ import { PaymentDetailsSchema } from '@repo/schema';
 import { CheckoutFlowStates } from '@repo/logic';
 import { useCheckoutStep } from '@repo/logic/react';
 
-import { Row } from '../../../../components/layout';
-import { Heading, Text } from '../../../../components/ui';
-import { FormField, Input, CardInput, ExpiryInput, CvvInput } from '../../../../components/forms';
+import { Row } from '@components/layout';
+import { Heading, Text } from '@components/ui';
+import { FormField, Input, CardInput, ExpiryInput, CvvInput } from '@components/forms';
 
 export const PaymentDetailsStep = () => {
   const { state, submit } = useCheckoutStep('payment-details');

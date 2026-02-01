@@ -1,6 +1,6 @@
 import { cva, type VariantProps } from 'class-variance-authority';
 
-import { cn } from '../../../../styles/utils';
+import { cn } from '@/styles/utils';
 
 interface StepCircleProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
@@ -24,7 +24,7 @@ const buttonVariants = cva(
   {
     variants: {
       status: {
-        completed: 'text-white border border-white active:scale-95',
+        completed: 'cursor-pointer text-white border border-white active:scale-95',
         active: 'bg-blue-200 text-blue-950',
         upcoming: 'bg-transparent text-white border border-white',
       },

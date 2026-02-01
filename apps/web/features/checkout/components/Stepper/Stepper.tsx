@@ -28,7 +28,7 @@ export const Stepper = () => {
   return (
     <ul className="flex justify-center gap-x-4 md:flex-col md:justify-start md:gap-y-8">
       {STEPS.map((step, idx) => (
-        <li key={step.id} className="flex md:cursor-pointer">
+        <li key={step.id} className="flex">
           <StepCircle
             stepNumber={idx + 1}
             status={getStepStatus(idx)}

@@ -6,9 +6,9 @@ import { AddressSchema } from '@repo/schema';
 import { CheckoutFlowStates } from '@repo/logic';
 import { useCheckoutStep } from '@repo/logic/react';
 
-import { Heading, Text } from '../../../../components/ui';
-import { Row } from '../../../../components/layout';
-import { FormField, Input } from '../../../../components/forms';
+import { Heading, Text } from '@components/ui';
+import { Row } from '@components/layout';
+import { FormField, Input } from '@components/forms';
 
 export const ShippingAddressStep = () => {
   const { state, submit } = useCheckoutStep('shipping-address');

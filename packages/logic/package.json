@@ -4,8 +4,8 @@
   "private": true,
   "exports": {
     ".": {
-      "types": "./src/index.ts",
-      "default": "./src/index.ts"
+      "types": "./src/core/index.ts",
+      "default": "./src/core/index.ts"
     },
     "./react": {
       "types": "./src/react/index.ts",

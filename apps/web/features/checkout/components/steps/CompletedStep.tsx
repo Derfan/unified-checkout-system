@@ -1,4 +1,4 @@
-import { Heading, Text, CheckIcon } from '../../../../components/ui';
+import { Heading, Text, CheckIcon } from '@components/ui';
 
 export const CompletedStep = () => (
   <div className="flex flex-col items-center md:my-20">

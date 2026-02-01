@@ -2,7 +2,7 @@ import { createActor, fromPromise } from 'xstate';
 import { describe, it, expect, vi } from 'vitest';
 import { PersonalDetails } from '@repo/schema';
 
-import { personalDetailsMachine } from '../../src/checkout/machines/steps/personal-details';
+import { personalDetailsMachine } from '../../src/core/checkout/machines/steps';
 
 describe('Step Machine (Personal Details)', () => {
   const validData: PersonalDetails = {

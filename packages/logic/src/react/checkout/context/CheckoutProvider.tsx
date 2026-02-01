@@ -2,7 +2,7 @@
 
 import { createActorContext } from '@xstate/react';
 
-import { checkoutFlowMachine } from '../../../checkout';
+import { checkoutFlowMachine } from '../../../core';
 
 export const CheckoutContext = createActorContext(checkoutFlowMachine);
 

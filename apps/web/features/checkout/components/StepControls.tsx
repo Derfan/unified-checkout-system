@@ -3,7 +3,7 @@
 import { CheckoutFlowStates } from '@repo/logic';
 import { useCheckoutState, useCheckoutNavigation, useCheckoutStep } from '@repo/logic/react';
 
-import { Button } from '../../../components/ui';
+import { Button } from '@components/ui';
 
 const stepIds = {
   [CheckoutFlowStates.PersonalDetailsStep]: 'personal-details',

@@ -2,10 +2,10 @@ import { createActor } from 'xstate';
 import { describe, it, expect, vi } from 'vitest';
 import { PersonalDetails, Address, PaymentDetails } from '@repo/schema';
 
-import { checkoutFlowMachine } from '../../src/checkout/machines/checkout-flow';
+import { checkoutFlowMachine } from '../../src/core';
 
 // Mock API services to return instantly without delays
-vi.mock('../../src/checkout/actors/api-services', () => ({
+vi.mock('../../src/core/checkout/actors/api-services', () => ({
   savePersonalDetails: vi.fn((data: PersonalDetails) => Promise.resolve(data)),
   saveShippingAddress: vi.fn((data: Address) => Promise.resolve(data)),
   savePaymentDetails: vi.fn((data: PaymentDetails) => Promise.resolve(data)),

@@ -1,8 +1,9 @@
-import { Surface } from '../../../components/ui';
-
 import Image from 'next/image';
-import bgMobileImage from '../../../public/bg-sidebar-mobile.svg';
-import bgDesktopImage from '../../../public/bg-sidebar-desktop.svg';
+
+import { Surface } from '@components/ui';
+
+import bgMobileImage from '@/public/bg-sidebar-mobile.svg';
+import bgDesktopImage from '@/public/bg-sidebar-desktop.svg';
 
 interface StepLayoutProps {
   stepper: React.ReactNode;

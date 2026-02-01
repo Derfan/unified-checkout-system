@@ -1,4 +1,4 @@
-import { CheckoutController } from './_components/CheckoutController';
+import { CheckoutController } from '@features/checkout';
 
 export default function CheckoutPage() {
   return (
