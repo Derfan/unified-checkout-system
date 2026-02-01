@@ -14,7 +14,9 @@ export const PaymentDetailsStep = () => {
   const defaultValues = useCheckoutSelector(
     useCallback((state) => state.context.paymentDetailsData ?? {}, []),
   );
-  const { send } = useCheckoutChildActorRef('payment-details');
+
+  const childActorRef = useCheckoutChildActorRef('payment-details');
+  const submitting = childActorRef.getSnapshot().matches('submitting');
 
   const {
     handleSubmit,
@@ -27,15 +29,16 @@ export const PaymentDetailsStep = () => {
 
   const onSubmit = useCallback(
     (data: PaymentDetails) => {
-      send({ type: 'SUBMIT', payload: data });
+      childActorRef?.send({ type: 'SUBMIT', payload: data });
     },
-    [send],
+    [childActorRef],
   );
 
   return (
     <StepWrapper
       title="Payment Details"
       description="Please provide your payment details for the order."
+      submitting={submitting}
       onSubmit={handleSubmit(onSubmit)}
     >
       <FormField

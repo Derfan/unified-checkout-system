@@ -14,7 +14,9 @@ export const ShippingAddressStep = () => {
   const defaultValues = useCheckoutSelector(
     useCallback((state) => state.context.shippingAddressData ?? {}, []),
   );
-  const { send } = useCheckoutChildActorRef('shipping-address');
+
+  const childActorRef = useCheckoutChildActorRef('shipping-address');
+  const submitting = childActorRef.getSnapshot().matches('submitting');
 
   const {
     handleSubmit,
@@ -27,15 +29,16 @@ export const ShippingAddressStep = () => {
 
   const onSubmit = useCallback(
     (data: Address) => {
-      send({ type: 'SUBMIT', payload: data });
+      childActorRef?.send({ type: 'SUBMIT', payload: data });
     },
-    [send],
+    [childActorRef],
   );
 
   return (
     <StepWrapper
       title="Shipping Address"
       description="Please provide your shipping address for the order."
+      submitting={submitting}
       onSubmit={handleSubmit(onSubmit)}
     >
       <Row space="sm">

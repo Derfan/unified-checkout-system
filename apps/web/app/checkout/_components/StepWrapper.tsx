@@ -7,14 +7,16 @@ interface StepWrapperProps extends PropsWithChildren {
   title?: string;
   description?: string;
   className?: string;
+  submitting?: boolean;
   onSubmit?: FormEventHandler<HTMLFormElement>;
 }
 
 export const StepWrapper = ({
-  title,
-  description,
   children,
-  className,
+  title = '',
+  description = '',
+  className = '',
+  submitting = false,
   onSubmit,
 }: StepWrapperProps) => {
   const content = (
@@ -34,7 +36,7 @@ export const StepWrapper = ({
   return onSubmit ? (
     <form onSubmit={onSubmit}>
       {content}
-      <StepControls />
+      <StepControls submitting={submitting} />
     </form>
   ) : (
     content

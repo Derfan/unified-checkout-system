@@ -14,7 +14,9 @@ export const PersonalInfoStep = () => {
   const defaultValues = useCheckoutSelector(
     useCallback((state) => state.context.personalDetailsData ?? {}, []),
   );
-  const { send } = useCheckoutChildActorRef('personal-details');
+
+  const childActorRef = useCheckoutChildActorRef('personal-details');
+  const submitting = childActorRef.getSnapshot().matches('submitting');
 
   const {
     handleSubmit,
@@ -28,15 +30,16 @@ export const PersonalInfoStep = () => {
 
   const onSubmit = useCallback(
     (data: PersonalDetails) => {
-      send({ type: 'SUBMIT', payload: data });
+      childActorRef?.send({ type: 'SUBMIT', payload: data });
     },
-    [send],
+    [childActorRef],
   );
 
   return (
     <StepWrapper
       title="Personal Information"
       description="Please provide your personal details for the order."
+      submitting={submitting}
       onSubmit={handleSubmit(onSubmit)}
     >
       <FormField label="Title" errorMessage={errors.title?.message}>
