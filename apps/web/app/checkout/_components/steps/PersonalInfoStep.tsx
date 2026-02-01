@@ -1,22 +1,16 @@
 'use client';
 
-import { useCallback } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { PersonaTitles, PersonalDetails, PersonalDetailsSchema } from '@repo/schema';
+import { useCheckoutStep } from '@repo/logic/react';
 
-import { useCheckoutChildActorRef, useCheckoutSelector } from '../../../../hooks/checkout';
 import { Row } from '../../../../components/layout';
 import { FormField, RadioGroup, Input, PhoneInput } from '../../../../components/forms';
 import { StepWrapper } from '../StepWrapper';
 
 export const PersonalInfoStep = () => {
-  const defaultValues = useCheckoutSelector(
-    useCallback((state) => state.context.personalDetailsData ?? {}, []),
-  );
-
-  const childActorRef = useCheckoutChildActorRef('personal-details');
-  const submitting = childActorRef.getSnapshot().matches('submitting');
+  const { state, submit } = useCheckoutStep<PersonalDetails>('personal-details');
 
   const {
     handleSubmit,
@@ -25,22 +19,15 @@ export const PersonalInfoStep = () => {
     formState: { errors },
   } = useForm<PersonalDetails>({
     resolver: zodResolver(PersonalDetailsSchema),
-    defaultValues,
+    defaultValues: state.data ?? {},
   });
-
-  const onSubmit = useCallback(
-    (data: PersonalDetails) => {
-      childActorRef?.send({ type: 'SUBMIT', payload: data });
-    },
-    [childActorRef],
-  );
 
   return (
     <StepWrapper
       title="Personal Information"
       description="Please provide your personal details for the order."
-      submitting={submitting}
-      onSubmit={handleSubmit(onSubmit)}
+      submitting={state.submitting}
+      onSubmit={handleSubmit(submit)}
     >
       <FormField label="Title" errorMessage={errors.title?.message}>
         <Controller

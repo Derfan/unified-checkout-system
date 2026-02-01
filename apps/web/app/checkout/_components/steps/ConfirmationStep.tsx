@@ -1,8 +1,8 @@
 'use client';
 
 import { useCallback } from 'react';
+import { useCheckoutSelector, useCheckoutActorRef } from '@repo/logic/react';
 
-import { useCheckoutSelector, useCheckoutActorRef } from '../../../../hooks/checkout';
 import { Text, Divider } from '../../../../components/ui';
 import { StepWrapper } from '../StepWrapper';
 import { StepControls } from '../StepControls';
@@ -31,11 +31,11 @@ export const ConfirmationStep = () => {
       };
     }, []),
   );
-  const { send } = useCheckoutActorRef();
+  const checkoutActorRef = useCheckoutActorRef();
 
   const handleConfirm = useCallback(() => {
-    send({ type: 'SUBMIT' });
-  }, [send]);
+    checkoutActorRef.send({ type: 'SUBMIT' });
+  }, [checkoutActorRef]);
 
   return (
     <StepWrapper

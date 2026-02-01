@@ -1,6 +1,6 @@
 import { CheckoutFlowStates } from '@repo/logic';
+import { useCheckoutState, useCheckoutNavigation } from '@repo/logic/react';
 
-import { useCheckoutSelector, useCheckoutActorRef } from '../../../hooks/checkout';
 import { Button } from '../../../components/ui';
 import { useCallback } from 'react';
 
@@ -17,15 +17,15 @@ export const StepControls = ({
   onBack,
   onNext,
 }: StepControlsProps) => {
-  const state = useCheckoutSelector((state) => state);
-  const { send } = useCheckoutActorRef();
+  const { currentStep } = useCheckoutState();
+  const { goBack } = useCheckoutNavigation();
 
-  const shouldShowBackButton = !state.matches(CheckoutFlowStates.PersonalDetailsStep);
+  const shouldShowBackButton = currentStep !== CheckoutFlowStates.PersonalDetailsStep;
 
   const handleBack = useCallback(() => {
     onBack?.();
-    send({ type: 'BACK' });
-  }, [onBack, send]);
+    goBack();
+  }, [onBack, goBack]);
 
   return (
     <div className="flex justify-between p-4 bg-white shadow-sm fixed bottom-0 left-0 right-0">

@@ -68,7 +68,7 @@ describe('Button Component', () => {
 
     // Assert
     expect(button).toBeDisabled();
-    expect(button).toHaveClass('disabled:opacity-50');
+    expect(button).toHaveClass('disabled:opacity-70');
     expect(handleClick).not.toHaveBeenCalled();
   });
 

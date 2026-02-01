@@ -1,22 +1,16 @@
 'use client';
 
-import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Address, AddressSchema } from '@repo/schema';
+import { useCheckoutStep } from '@repo/logic/react';
 
-import { useCheckoutSelector, useCheckoutChildActorRef } from '../../../../hooks/checkout';
 import { Row } from '../../../../components/layout';
 import { FormField, Input } from '../../../../components/forms';
 import { StepWrapper } from '../StepWrapper';
 
 export const ShippingAddressStep = () => {
-  const defaultValues = useCheckoutSelector(
-    useCallback((state) => state.context.shippingAddressData ?? {}, []),
-  );
-
-  const childActorRef = useCheckoutChildActorRef('shipping-address');
-  const submitting = childActorRef.getSnapshot().matches('submitting');
+  const { state, submit } = useCheckoutStep<Address>('shipping-address');
 
   const {
     handleSubmit,
@@ -24,22 +18,15 @@ export const ShippingAddressStep = () => {
     formState: { errors },
   } = useForm<Address>({
     resolver: zodResolver(AddressSchema),
-    defaultValues,
+    defaultValues: state.data ?? {},
   });
-
-  const onSubmit = useCallback(
-    (data: Address) => {
-      childActorRef?.send({ type: 'SUBMIT', payload: data });
-    },
-    [childActorRef],
-  );
 
   return (
     <StepWrapper
       title="Shipping Address"
       description="Please provide your shipping address for the order."
-      submitting={submitting}
-      onSubmit={handleSubmit(onSubmit)}
+      submitting={state.submitting}
+      onSubmit={handleSubmit(submit)}
     >
       <Row space="sm">
         <FormField
