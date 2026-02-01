@@ -3,12 +3,12 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Address, AddressSchema } from '@repo/schema';
+import { CheckoutFlowStates } from '@repo/logic';
 import { useCheckoutStep } from '@repo/logic/react';
 
 import { Heading, Text } from '../../../../components/ui';
 import { Row } from '../../../../components/layout';
 import { FormField, Input } from '../../../../components/forms';
-import { StepWrapper } from '../StepWrapper';
 
 export const ShippingAddressStep = () => {
   const { state, submit } = useCheckoutStep<Address>('shipping-address');
@@ -23,7 +23,7 @@ export const ShippingAddressStep = () => {
   });
 
   return (
-    <StepWrapper submitting={state.submitting} onSubmit={handleSubmit(submit)}>
+    <form id={CheckoutFlowStates.ShippingAddressStep} onSubmit={handleSubmit(submit)}>
       <Heading>Shipping Address</Heading>
 
       <Text variant="secondary" className="mt-2">
@@ -73,6 +73,6 @@ export const ShippingAddressStep = () => {
       >
         <Input placeholder="e.g. Germany" autoComplete="country-name" {...register('country')} />
       </FormField>
-    </StepWrapper>
+    </form>
   );
 };

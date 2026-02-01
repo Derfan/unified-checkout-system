@@ -3,12 +3,12 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { PaymentDetails, PaymentDetailsSchema } from '@repo/schema';
+import { CheckoutFlowStates } from '@repo/logic';
 import { useCheckoutStep } from '@repo/logic/react';
 
 import { Row } from '../../../../components/layout';
 import { Heading, Text } from '../../../../components/ui';
 import { FormField, Input, CardInput, ExpiryInput, CvvInput } from '../../../../components/forms';
-import { StepWrapper } from '../StepWrapper';
 
 export const PaymentDetailsStep = () => {
   const { state, submit } = useCheckoutStep<PaymentDetails>('payment-details');
@@ -23,7 +23,7 @@ export const PaymentDetailsStep = () => {
   });
 
   return (
-    <StepWrapper submitting={state.submitting} onSubmit={handleSubmit(submit)}>
+    <form id={CheckoutFlowStates.PaymentDetailsStep} onSubmit={handleSubmit(submit)}>
       <Heading>Payment Details</Heading>
 
       <Text variant="secondary" className="mt-2 mb-4">
@@ -57,6 +57,6 @@ export const PaymentDetailsStep = () => {
           <CvvInput placeholder="e.g. 123" {...register('cvv')} />
         </FormField>
       </Row>
-    </StepWrapper>
+    </form>
   );
 };

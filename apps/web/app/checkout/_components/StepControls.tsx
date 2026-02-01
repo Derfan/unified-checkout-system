@@ -1,44 +1,29 @@
+'use client';
+
 import { CheckoutFlowStates } from '@repo/logic';
 import { useCheckoutState, useCheckoutNavigation } from '@repo/logic/react';
 
 import { Button } from '../../../components/ui';
-import { useCallback } from 'react';
 
-interface StepControlsProps {
-  nextLabel?: string;
-  submitting?: boolean;
-  onBack?: () => void;
-  onNext?: () => void;
-}
-
-export const StepControls = ({
-  nextLabel = 'Next Step',
-  submitting = false,
-  onBack,
-  onNext,
-}: StepControlsProps) => {
+export const StepControls = () => {
   const { currentStep } = useCheckoutState();
   const { goBack } = useCheckoutNavigation();
 
-  const shouldShowBackButton = currentStep !== CheckoutFlowStates.PersonalDetailsStep;
-
-  const handleBack = useCallback(() => {
-    onBack?.();
-    goBack();
-  }, [onBack, goBack]);
+  const nextLabel =
+    currentStep === CheckoutFlowStates.ConfirmationStep ? 'Confirm Order' : 'Next Step';
 
   return (
-    <div className="flex justify-between p-4 bg-white shadow-sm fixed bottom-0 left-0 right-0">
-      {shouldShowBackButton ? (
-        <Button variant="tertiary" disabled={submitting} onClick={handleBack}>
+    <div className="flex justify-between">
+      {currentStep !== CheckoutFlowStates.PersonalDetailsStep ? (
+        <Button variant="tertiary" onClick={goBack}>
           Go Back
         </Button>
       ) : (
         <div /> // Spacer to keep "Next" on the right
       )}
 
-      <Button type="submit" variant="primary" disabled={submitting} onClick={onNext}>
-        {submitting ? 'Submitting...' : nextLabel}
+      <Button type="submit" form={currentStep} variant="primary">
+        {nextLabel}
       </Button>
     </div>
   );

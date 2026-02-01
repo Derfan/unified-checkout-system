@@ -1,8 +1,5 @@
 import { Metadata } from 'next';
-import Image from 'next/image';
 import { CheckoutProvider } from '@repo/logic/react';
-
-import bgImage from '../../public/bg-sidebar-mobile.svg';
 
 export const metadata: Metadata = {
   title: 'Checkout',
@@ -14,15 +11,5 @@ export default function CheckoutLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <CheckoutProvider>
-      <div className="bg-blue-100">
-        <div className="fixed top-0 right-0 left-0 pointer-events-none" aria-hidden="true">
-          <Image src={bgImage} alt="" role="presentation" className="w-full" loading="eager" />
-        </div>
-
-        <main className="relative min-h-screen flex flex-col scrollable-main">{children}</main>
-      </div>
-    </CheckoutProvider>
-  );
+  return <CheckoutProvider>{children}</CheckoutProvider>;
 }

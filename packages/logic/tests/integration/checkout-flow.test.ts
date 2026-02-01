@@ -16,7 +16,6 @@ describe('Checkout Flow Orchestrator', () => {
     title: 'mr',
     firstName: 'John',
     lastName: 'Doe',
-    dateOfBirth: '1990-01-01',
     email: 'john@test.com',
     phoneNumber: '+1234567890',
   };

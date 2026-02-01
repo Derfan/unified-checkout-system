@@ -1,8 +1,7 @@
 import { Heading, Text, CheckIcon } from '../../../../components/ui';
-import { StepWrapper } from '../StepWrapper';
 
 export const CompletedStep = () => (
-  <StepWrapper className="flex flex-col items-center">
+  <div className="flex flex-col items-center md:my-20">
     <CheckIcon size="lg" className="mt-2" />
     <Heading align="center" className="mt-4">
       Thank You!
@@ -11,5 +10,5 @@ export const CompletedStep = () => (
       Thanks for confirming your order! We hope you have fun using our platform. If you ever need
       support, please feel free to email us at support@loremipsum.com.
     </Text>
-  </StepWrapper>
+  </div>
 );

@@ -1,16 +1,16 @@
 'use client';
 
 import { useCallback } from 'react';
+import { CheckoutFlowStates } from '@repo/logic';
 import { useCheckoutSelector, useCheckoutActorRef } from '@repo/logic/react';
 
 import { Text, Divider, Heading } from '../../../../components/ui';
-import { StepWrapper } from '../StepWrapper';
-import { StepControls } from '../StepControls';
 
 // TODO: Move to utils
 const capitalize = (str: string) => `${str.charAt(0).toUpperCase()}${str.slice(1).toLowerCase()}`;
 
 export const ConfirmationStep = () => {
+  const checkoutActorRef = useCheckoutActorRef();
   const values = useCheckoutSelector(
     useCallback((state) => {
       const personalDetails = state.context.personalDetailsData;
@@ -31,14 +31,17 @@ export const ConfirmationStep = () => {
       };
     }, []),
   );
-  const checkoutActorRef = useCheckoutActorRef();
 
-  const handleConfirm = useCallback(() => {
-    checkoutActorRef.send({ type: 'SUBMIT' });
-  }, [checkoutActorRef]);
+  const handleSubmit = useCallback(
+    (event: React.FormEvent) => {
+      event.preventDefault();
+      checkoutActorRef.send({ type: 'SUBMIT' });
+    },
+    [checkoutActorRef],
+  );
 
   return (
-    <StepWrapper>
+    <form id={CheckoutFlowStates.ConfirmationStep} onSubmit={handleSubmit}>
       <Heading>Confirmation</Heading>
 
       <Text variant="secondary" className="mt-2">
@@ -65,8 +68,6 @@ export const ConfirmationStep = () => {
           <Text>{values.email}</Text>
         </div>
       </div>
-
-      <StepControls nextLabel="Confirm" onNext={handleConfirm} />
-    </StepWrapper>
+    </form>
   );
 };

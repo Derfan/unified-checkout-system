@@ -27,23 +27,6 @@ export const PersonalDetailsSchema = z.object({
     .max(50, 'Max 50 characters')
     .regex(NAME_PATTERN, 'Invalid characters')
     .transform((val) => val.trim()),
-  dateOfBirth: z
-    .string()
-    .min(1, 'Required')
-    .refine((date) => {
-      const dob = new Date(date);
-      return !isNaN(dob.getTime());
-    }, 'Invalid date')
-    .refine((date) => {
-      const dob = new Date(date);
-      const today = new Date();
-      return dob < today;
-    }, 'Cannot be future date')
-    .refine((date) => {
-      const dob = new Date(date);
-      const age = new Date().getFullYear() - dob.getFullYear();
-      return age >= 18 && age <= 120;
-    }, 'Must be 18 or older'),
   email: z
     .email('Invalid email')
     .min(1, 'Required')

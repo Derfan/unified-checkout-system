@@ -3,12 +3,12 @@
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { PersonaTitles, PersonalDetails, PersonalDetailsSchema } from '@repo/schema';
+import { CheckoutFlowStates } from '@repo/logic';
 import { useCheckoutStep } from '@repo/logic/react';
 
 import { Row } from '../../../../components/layout';
 import { Heading, Text } from '../../../../components/ui';
 import { FormField, RadioGroup, Input, PhoneInput } from '../../../../components/forms';
-import { StepWrapper } from '../StepWrapper';
 
 export const PersonalInfoStep = () => {
   const { state, submit } = useCheckoutStep<PersonalDetails>('personal-details');
@@ -24,7 +24,7 @@ export const PersonalInfoStep = () => {
   });
 
   return (
-    <StepWrapper submitting={state.submitting} onSubmit={handleSubmit(submit)}>
+    <form id={CheckoutFlowStates.PersonalDetailsStep} onSubmit={handleSubmit(submit)}>
       <Heading>Personal Information</Heading>
 
       <Text variant="secondary" className="mt-2">
@@ -61,15 +61,6 @@ export const PersonalInfoStep = () => {
       </Row>
 
       <FormField
-        id="dateOfBirth"
-        label="Date of Birth"
-        className="mt-2"
-        errorMessage={errors.dateOfBirth?.message}
-      >
-        <Input type="date" placeholder="e.g. 1990-01-01" {...register('dateOfBirth')} />
-      </FormField>
-
-      <FormField
         id="email"
         label="Email Address"
         className="mt-2"
@@ -92,6 +83,6 @@ export const PersonalInfoStep = () => {
       >
         <PhoneInput placeholder="e.g. +49 1234 567890" {...register('phoneNumber')} />
       </FormField>
-    </StepWrapper>
+    </form>
   );
 };
