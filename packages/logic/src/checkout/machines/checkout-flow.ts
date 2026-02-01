@@ -1,9 +1,7 @@
 import { setup, assign } from 'xstate';
 import type { OutputFrom } from 'xstate';
 
-import { personalDetailsMachine } from './steps/personal-details';
-import { shippingAddressMachine } from './steps/shipping-address';
-import { paymentDetailsMachine } from './steps/payment-details';
+import { personalDetailsMachine, shippingAddressMachine, paymentDetailsMachine } from './steps';
 
 // TODO: Move to a shared utilities package
 type DeepNonNullable<T> = {

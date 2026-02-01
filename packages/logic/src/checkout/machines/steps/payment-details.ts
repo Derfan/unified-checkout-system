@@ -1,3 +1,4 @@
+import { ActorRefFrom } from 'xstate';
 import { PaymentDetailsSchema } from '@repo/schema';
 import type { PaymentDetails } from '@repo/schema';
 
@@ -9,3 +10,5 @@ export const paymentDetailsMachine = createStepMachine<PaymentDetails>({
   schema: PaymentDetailsSchema,
   saveData: savePaymentDetails,
 });
+
+export type PaymentDetailsActorRef = ActorRefFrom<typeof paymentDetailsMachine>;

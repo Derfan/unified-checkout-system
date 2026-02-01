@@ -2,7 +2,7 @@
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Address, AddressSchema } from '@repo/schema';
+import { AddressSchema } from '@repo/schema';
 import { CheckoutFlowStates } from '@repo/logic';
 import { useCheckoutStep } from '@repo/logic/react';
 
@@ -11,13 +11,13 @@ import { Row } from '../../../../components/layout';
 import { FormField, Input } from '../../../../components/forms';
 
 export const ShippingAddressStep = () => {
-  const { state, submit } = useCheckoutStep<Address>('shipping-address');
+  const { state, submit } = useCheckoutStep('shipping-address');
 
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<Address>({
+  } = useForm({
     resolver: zodResolver(AddressSchema),
     defaultValues: state.data ?? {},
   });

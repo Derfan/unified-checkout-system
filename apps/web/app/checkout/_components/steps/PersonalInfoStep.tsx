@@ -2,7 +2,7 @@
 
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { PersonaTitles, PersonalDetails, PersonalDetailsSchema } from '@repo/schema';
+import { PersonaTitles, PersonalDetailsSchema } from '@repo/schema';
 import { CheckoutFlowStates } from '@repo/logic';
 import { useCheckoutStep } from '@repo/logic/react';
 
@@ -11,14 +11,14 @@ import { Heading, Text } from '../../../../components/ui';
 import { FormField, RadioGroup, Input, PhoneInput } from '../../../../components/forms';
 
 export const PersonalInfoStep = () => {
-  const { state, submit } = useCheckoutStep<PersonalDetails>('personal-details');
+  const { state, submit } = useCheckoutStep('personal-details');
 
   const {
     handleSubmit,
     register,
     control,
     formState: { errors },
-  } = useForm<PersonalDetails>({
+  } = useForm({
     resolver: zodResolver(PersonalDetailsSchema),
     defaultValues: state.data ?? {},
   });

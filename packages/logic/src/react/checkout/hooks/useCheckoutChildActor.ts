@@ -1,32 +1,25 @@
-import type { AnyActorRef, StateValue } from 'xstate';
-import { useSelector } from '@xstate/react';
-
+import type {
+  PersonalDetailsActorRef,
+  ShippingAddressActorRef,
+  PaymentDetailsActorRef,
+} from '../../../checkout';
 import { useCheckoutSelector } from './useCheckout';
 
-export interface StepMachineSnapshot<TData = unknown> {
-  value: StateValue;
-  context: {
-    data: TData | null;
-    error: string | null;
-    retryCount: number;
-  };
-  matches: (value: StateValue) => boolean;
-}
+export type StepActorRef =
+  | PersonalDetailsActorRef
+  | ShippingAddressActorRef
+  | PaymentDetailsActorRef;
 
-export const useCheckoutChildActorRef = <T extends string>(key: T) => {
-  return useCheckoutSelector((state) => state.children[key]);
+export type StepActorRefMap = {
+  'personal-details': PersonalDetailsActorRef;
+  'shipping-address': ShippingAddressActorRef;
+  'payment-details': PaymentDetailsActorRef;
 };
 
-export const useCheckoutChildActorState = <TData = unknown, TSelected = unknown>(
-  actorId: string,
-  selector: (snapshot: StepMachineSnapshot<TData>) => TSelected,
-  fallback?: TSelected,
-) => {
-  const childActorRef = useCheckoutChildActorRef(actorId);
-
-  if (!childActorRef) {
-    return fallback as TSelected;
-  }
-
-  return useSelector(childActorRef as AnyActorRef, selector);
+export const useCheckoutChildActorRef = <TStepId extends keyof StepActorRefMap>(
+  stepId: TStepId,
+): StepActorRefMap[TStepId] | undefined => {
+  return useCheckoutSelector((state) => state.children[stepId]) as
+    | StepActorRefMap[TStepId]
+    | undefined;
 };

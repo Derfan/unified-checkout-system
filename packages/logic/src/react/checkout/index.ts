@@ -7,9 +7,6 @@ export {
   useCheckoutNavigation,
 } from './hooks/useCheckout';
 
-export {
-  useCheckoutChildActorRef,
-  useCheckoutChildActorState,
-} from './hooks/useCheckoutChildActor';
+export { useCheckoutChildActorRef } from './hooks/useCheckoutChildActor';
 
 export { useCheckoutStep, type UseCheckoutStepReturn } from './hooks/useCheckoutStep';

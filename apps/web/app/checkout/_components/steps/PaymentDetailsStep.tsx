@@ -2,7 +2,7 @@
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { PaymentDetails, PaymentDetailsSchema } from '@repo/schema';
+import { PaymentDetailsSchema } from '@repo/schema';
 import { CheckoutFlowStates } from '@repo/logic';
 import { useCheckoutStep } from '@repo/logic/react';
 
@@ -11,13 +11,13 @@ import { Heading, Text } from '../../../../components/ui';
 import { FormField, Input, CardInput, ExpiryInput, CvvInput } from '../../../../components/forms';
 
 export const PaymentDetailsStep = () => {
-  const { state, submit } = useCheckoutStep<PaymentDetails>('payment-details');
+  const { state, submit } = useCheckoutStep('payment-details');
 
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<PaymentDetails>({
+  } = useForm({
     resolver: zodResolver(PaymentDetailsSchema),
     defaultValues: state.data ?? {},
   });

@@ -1,3 +1,4 @@
+import { ActorRefFrom } from 'xstate';
 import { AddressSchema } from '@repo/schema';
 import type { Address } from '@repo/schema';
 
@@ -9,3 +10,5 @@ export const shippingAddressMachine = createStepMachine<Address>({
   schema: AddressSchema,
   saveData: saveShippingAddress,
 });
+
+export type ShippingAddressActorRef = ActorRefFrom<typeof shippingAddressMachine>;

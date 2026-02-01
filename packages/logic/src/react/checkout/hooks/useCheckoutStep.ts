@@ -1,12 +1,40 @@
-import { useCallback } from 'react';
-import type { AnyActorRef } from 'xstate';
+import { useCallback, useMemo } from 'react';
+import type { SnapshotFrom } from 'xstate';
+import { useSelector } from '@xstate/react';
 
-import { useCheckoutChildActorRef, useCheckoutChildActorState } from './useCheckoutChildActor';
+import {
+  useCheckoutChildActorRef,
+  type StepActorRefMap,
+  type StepActorRef,
+} from './useCheckoutChildActor';
+
+interface StepMachineContext<TData> {
+  data: TData | null;
+  error: string | null;
+  retryCount: number;
+}
+
+interface StepMachineSnapshot<TData> {
+  context: StepMachineContext<TData>;
+  matches: (state: string) => boolean;
+  value: unknown;
+}
+
+type ExtractDataType<T extends StepActorRef> =
+  SnapshotFrom<T> extends {
+    context: { data: infer D | null };
+  }
+    ? D
+    : never;
+
+type StepDataMap = {
+  [K in keyof StepActorRefMap]: ExtractDataType<StepActorRefMap[K]>;
+};
 
 type StepEvent<TData> = { type: 'SUBMIT'; payload: TData } | { type: 'RETRY' };
 
 export interface UseCheckoutStepReturn<TData> {
-  actorRef: AnyActorRef | undefined;
+  actorRef: StepActorRef | undefined;
   send: ((event: StepEvent<TData>) => void) | undefined;
   state: {
     submitting: boolean;
@@ -17,17 +45,29 @@ export interface UseCheckoutStepReturn<TData> {
   retry: () => void;
 }
 
-export const useCheckoutStep = <TData = unknown>(stepId: string): UseCheckoutStepReturn<TData> => {
+export const useCheckoutStep = <TStepId extends keyof StepActorRefMap>(
+  stepId: TStepId,
+): UseCheckoutStepReturn<StepDataMap[TStepId]> => {
   const actorRef = useCheckoutChildActorRef(stepId);
 
-  const state = useCheckoutChildActorState<TData, UseCheckoutStepReturn<TData>['state']>(
-    stepId,
-    (snapshot) => ({
-      submitting: snapshot.matches('submitting'),
-      error: snapshot.context.error,
-      data: snapshot.context.data as TData | null,
-    }),
-    { submitting: false, error: null, data: null },
+  type TData = StepDataMap[TStepId];
+
+  const state = useSelector(
+    actorRef,
+    (snapshot) => {
+      if (!snapshot) {
+        return { submitting: false, error: null, data: null };
+      }
+
+      const stepSnapshot = snapshot as unknown as StepMachineSnapshot<TData>;
+
+      return {
+        submitting: stepSnapshot.matches('submitting'),
+        error: stepSnapshot.context.error,
+        data: stepSnapshot.context.data,
+      };
+    },
+    (a, b) => a.submitting === b.submitting && a.error === b.error && a.data === b.data,
   );
 
   const submit = useCallback(
@@ -41,9 +81,14 @@ export const useCheckoutStep = <TData = unknown>(stepId: string): UseCheckoutSte
     actorRef?.send({ type: 'RETRY' });
   }, [actorRef]);
 
+  const send = useMemo(
+    () => (actorRef?.send ? (event: StepEvent<TData>) => actorRef.send(event) : undefined),
+    [actorRef],
+  );
+
   return {
     actorRef,
-    send: actorRef?.send ? (event: StepEvent<TData>) => actorRef.send(event) : undefined,
+    send,
     state,
     submit,
     retry,
