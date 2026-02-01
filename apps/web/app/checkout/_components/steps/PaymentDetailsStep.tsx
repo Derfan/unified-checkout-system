@@ -41,7 +41,6 @@ export const PaymentDetailsStep = () => {
       <FormField
         id="cardHolderName"
         label="Card Holder Name"
-        className="mt-4"
         errorMessage={errors.cardHolderName?.message}
       >
         <Input placeholder="e.g. John Doe" {...register('cardHolderName')} />

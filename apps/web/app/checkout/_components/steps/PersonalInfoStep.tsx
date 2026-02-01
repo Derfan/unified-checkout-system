@@ -39,7 +39,7 @@ export const PersonalInfoStep = () => {
       description="Please provide your personal details for the order."
       onSubmit={handleSubmit(onSubmit)}
     >
-      <FormField label="Title" className="mt-4" errorMessage={errors.title?.message}>
+      <FormField label="Title" errorMessage={errors.title?.message}>
         <Controller
           name="title"
           control={control}

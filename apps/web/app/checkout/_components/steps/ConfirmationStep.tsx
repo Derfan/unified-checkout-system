@@ -42,7 +42,7 @@ export const ConfirmationStep = () => {
       title="Confirmation"
       description="Please review your order details before confirming."
     >
-      <div className="bg-blue-50 p-4 mt-4 rounded-md gap-y-4 flex flex-col">
+      <div className="bg-blue-50 p-4 rounded-md gap-y-4 flex flex-col">
         <div>
           <Text variant="secondary" size="sm" className="mb-1" uppercase>
             Shipping To

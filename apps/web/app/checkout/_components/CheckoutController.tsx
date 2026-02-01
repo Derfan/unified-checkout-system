@@ -8,6 +8,7 @@ import {
   ShippingAddressStep,
   PaymentDetailsStep,
   ConfirmationStep,
+  CompletedStep,
 } from './steps';
 
 export const CheckoutController = () => {
@@ -18,13 +19,8 @@ export const CheckoutController = () => {
     if (checkoutState.matches(CheckoutFlowStates.ShippingAddressStep))
       return <ShippingAddressStep />;
     if (checkoutState.matches(CheckoutFlowStates.PaymentDetailsStep)) return <PaymentDetailsStep />;
-    if (
-      checkoutState.matches(CheckoutFlowStates.ConfirmationStep) ||
-      checkoutState.matches(CheckoutFlowStates.Completed)
-    )
-      return <ConfirmationStep />;
-
-    return null;
+    if (checkoutState.matches(CheckoutFlowStates.ConfirmationStep)) return <ConfirmationStep />;
+    if (checkoutState.matches(CheckoutFlowStates.Completed)) return <CompletedStep />;
   };
 
   return renderStep();
