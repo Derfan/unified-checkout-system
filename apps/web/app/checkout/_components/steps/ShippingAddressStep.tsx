@@ -69,7 +69,7 @@ export const ShippingAddressStep = () => {
         className="mt-2"
         errorMessage={errors.country?.message}
       >
-        <Input placeholder="e.g. Germany" {...register('country')} />
+        <Input placeholder="e.g. Germany" autoComplete="country-name" {...register('country')} />
       </FormField>
     </StepWrapper>
   );

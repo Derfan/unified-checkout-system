@@ -33,7 +33,7 @@ export const PaymentDetailsStep = () => {
         label="Card Holder Name"
         errorMessage={errors.cardHolderName?.message}
       >
-        <Input placeholder="e.g. John Doe" {...register('cardHolderName')} />
+        <Input placeholder="e.g. John Doe" autoComplete="cc-name" {...register('cardHolderName')} />
       </FormField>
 
       <FormField

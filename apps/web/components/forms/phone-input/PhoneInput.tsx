@@ -16,7 +16,16 @@ export const PhoneInput = React.forwardRef<HTMLInputElement, InputProps>((props,
     props?.onChange?.(event);
   };
 
-  return <Input type="tel" inputMode="tel" ref={ref} {...props} onChange={handleChange} />;
+  return (
+    <Input
+      type="tel"
+      inputMode="tel"
+      autoComplete="tel"
+      ref={ref}
+      {...props}
+      onChange={handleChange}
+    />
+  );
 });
 
 PhoneInput.displayName = 'PhoneInput';

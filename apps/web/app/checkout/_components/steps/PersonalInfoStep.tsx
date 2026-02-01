@@ -76,6 +76,7 @@ export const PersonalInfoStep = () => {
         <Input
           type="email"
           inputMode="email"
+          autoComplete="email"
           placeholder="e.g. stephen.king@example.com"
           {...register('email')}
         />
