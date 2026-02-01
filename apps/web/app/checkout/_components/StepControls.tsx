@@ -2,26 +2,36 @@ import { CheckoutFlowStates } from '@repo/logic';
 
 import { useCheckoutSelector, useCheckoutActorRef } from '../../../hooks/checkout';
 import { Button } from '../../../components/ui';
+import { useCallback } from 'react';
 
 interface StepControlsProps {
   nextLabel?: string;
+  onBack?: () => void;
+  onNext?: () => void;
 }
 
-export const StepControls = ({ nextLabel = 'Next Step' }: StepControlsProps) => {
+export const StepControls = ({ nextLabel = 'Next Step', onBack, onNext }: StepControlsProps) => {
   const state = useCheckoutSelector((state) => state);
-  const actor = useCheckoutActorRef();
+  const { send } = useCheckoutActorRef();
+
+  const shouldShowBackButton = !state.matches(CheckoutFlowStates.PersonalDetailsStep);
+
+  const handleBack = useCallback(() => {
+    onBack?.();
+    send({ type: 'BACK' });
+  }, [onBack, send]);
 
   return (
     <div className="flex justify-between p-4 bg-white shadow-sm fixed bottom-0 left-0 right-0">
-      {!state.matches(CheckoutFlowStates.PersonalDetailsStep) ? (
-        <Button variant="tertiary" onClick={() => actor.send({ type: 'BACK' })}>
+      {shouldShowBackButton ? (
+        <Button variant="tertiary" onClick={handleBack}>
           Go Back
         </Button>
       ) : (
         <div /> // Spacer to keep "Next" on the right
       )}
 
-      <Button type="submit" variant="primary">
+      <Button type="submit" variant="primary" onClick={onNext}>
         {nextLabel}
       </Button>
     </div>

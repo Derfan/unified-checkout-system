@@ -7,15 +7,14 @@ import { Address, AddressSchema } from '@repo/schema';
 
 import { useCheckoutSelector, useCheckoutChildActorRef } from '../../../../hooks/checkout';
 import { Row } from '../../../../components/layout';
-import { Surface, Heading, Text } from '../../../../components/ui';
 import { FormField, Input } from '../../../../components/forms';
-import { StepControls } from '../StepControls';
+import { StepWrapper } from '../StepWrapper';
 
 export const ShippingAddressStep = () => {
   const defaultValues = useCheckoutSelector(
     useCallback((state) => state.context.shippingAddressData ?? {}, []),
   );
-  const childActorRef = useCheckoutChildActorRef('shipping-address');
+  const { send } = useCheckoutChildActorRef('shipping-address');
 
   const {
     handleSubmit,
@@ -28,63 +27,45 @@ export const ShippingAddressStep = () => {
 
   const onSubmit = useCallback(
     (data: Address) => {
-      childActorRef?.send({ type: 'SUBMIT', payload: data });
+      send({ type: 'SUBMIT', payload: data });
     },
-    [childActorRef],
+    [send],
   );
 
   return (
-    <>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="relative mx-4 my-24">
-          <Surface>
-            <Heading>Shipping Address</Heading>
+    <StepWrapper
+      title="Shipping Address"
+      description="Please provide your shipping address for the order."
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <Row space="sm" className="mt-4">
+        <FormField id="street" label="Street" errorMessage={errors.street?.message}>
+          <Input placeholder="e.g. Main St" {...register('street')} />
+        </FormField>
 
-            <Text variant="secondary" className="mt-2">
-              Please provide your shipping address for the order.
-            </Text>
+        <FormField id="houseNumber" label="House Number" errorMessage={errors.houseNumber?.message}>
+          <Input placeholder="e.g. 123" {...register('houseNumber')} />
+        </FormField>
+      </Row>
 
-            <Row space="sm" className="mt-4">
-              <FormField id="street" label="Street" errorMessage={errors.street?.message}>
-                <Input placeholder="e.g. Main St" {...register('street')} />
-              </FormField>
+      <Row space="sm" className="mt-2">
+        <FormField id="city" label="City" errorMessage={errors.city?.message}>
+          <Input placeholder="e.g. Anytown" {...register('city')} />
+        </FormField>
 
-              <FormField
-                id="houseNumber"
-                label="House Number"
-                errorMessage={errors.houseNumber?.message}
-              >
-                <Input placeholder="e.g. 123" {...register('houseNumber')} />
-              </FormField>
-            </Row>
+        <FormField id="postalCode" label="Postal Code" errorMessage={errors.postalCode?.message}>
+          <Input placeholder="e.g. 12345" {...register('postalCode')} />
+        </FormField>
+      </Row>
 
-            <Row space="sm" className="mt-2">
-              <FormField id="city" label="City" errorMessage={errors.city?.message}>
-                <Input placeholder="e.g. Anytown" {...register('city')} />
-              </FormField>
-
-              <FormField
-                id="postalCode"
-                label="Postal Code"
-                errorMessage={errors.postalCode?.message}
-              >
-                <Input placeholder="e.g. 12345" {...register('postalCode')} />
-              </FormField>
-            </Row>
-
-            <FormField
-              id="country"
-              label="Country"
-              className="mt-2"
-              errorMessage={errors.country?.message}
-            >
-              <Input placeholder="e.g. Germany" {...register('country')} />
-            </FormField>
-          </Surface>
-        </div>
-
-        <StepControls />
-      </form>
-    </>
+      <FormField
+        id="country"
+        label="Country"
+        className="mt-2"
+        errorMessage={errors.country?.message}
+      >
+        <Input placeholder="e.g. Germany" {...register('country')} />
+      </FormField>
+    </StepWrapper>
   );
 };

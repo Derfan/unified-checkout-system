@@ -2,8 +2,9 @@
 
 import { useCallback } from 'react';
 
-import { useCheckoutSelector } from '../../../../hooks/checkout';
-import { Surface, Heading, Text, Divider } from '../../../../components/ui';
+import { useCheckoutSelector, useCheckoutActorRef } from '../../../../hooks/checkout';
+import { Text, Divider } from '../../../../components/ui';
+import { StepWrapper } from '../StepWrapper';
 import { StepControls } from '../StepControls';
 
 // TODO: Move to utils
@@ -30,41 +31,39 @@ export const ConfirmationStep = () => {
       };
     }, []),
   );
+  const { send } = useCheckoutActorRef();
+
+  const handleConfirm = useCallback(() => {
+    send({ type: 'SUBMIT' });
+  }, [send]);
 
   return (
-    <>
-      <div className="relative mx-4 my-24">
-        <Surface>
-          <Heading>Confirmation</Heading>
-
-          <Text variant="secondary" className="mt-2">
-            Please review your order details before confirming.
+    <StepWrapper
+      title="Confirmation"
+      description="Please review your order details before confirming."
+    >
+      <div className="bg-blue-50 p-4 mt-4 rounded-md gap-y-4 flex flex-col">
+        <div>
+          <Text variant="secondary" size="sm" className="mb-1" uppercase>
+            Shipping To
           </Text>
+          <Text>{values.fullName}</Text>
+          <Text>{values.addressLine1}</Text>
+          <Text>{values.addressLine2}</Text>
+        </div>
 
-          <div className="bg-blue-50 p-4 mt-4 rounded-md gap-y-4 flex flex-col">
-            <div>
-              <Text variant="secondary" size="sm" className="mb-1" uppercase>
-                Shipping To
-              </Text>
-              <Text>{values.fullName}</Text>
-              <Text>{values.addressLine1}</Text>
-              <Text>{values.addressLine2}</Text>
-            </div>
+        <Divider />
 
-            <Divider />
-
-            <div>
-              <Text variant="secondary" size="sm" className="mb-1" uppercase>
-                Contact
-              </Text>
-              <Text>{values.phoneNumber}</Text>
-              <Text>{values.email}</Text>
-            </div>
-          </div>
-        </Surface>
+        <div>
+          <Text variant="secondary" size="sm" className="mb-1" uppercase>
+            Contact
+          </Text>
+          <Text>{values.phoneNumber}</Text>
+          <Text>{values.email}</Text>
+        </div>
       </div>
 
-      <StepControls nextLabel="Confirm" />
-    </>
+      <StepControls nextLabel="Confirm" onNext={handleConfirm} />
+    </StepWrapper>
   );
 };
