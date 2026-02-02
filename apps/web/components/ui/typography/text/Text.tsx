@@ -30,6 +30,7 @@ const textVariants = cva('', {
       secondary: 'text-gray-500',
     },
     size: {
+      xs: 'text-xs md:text-sm',
       sm: 'text-sm md:text-base',
       md: 'text-base md:text-lg',
       lg: 'text-lg md:text-xl',

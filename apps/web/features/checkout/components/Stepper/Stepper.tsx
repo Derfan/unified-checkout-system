@@ -2,6 +2,9 @@
 
 import { CheckoutFlowStates } from '@repo/logic';
 import { useCheckoutState, useCheckoutNavigation } from '@repo/logic/react';
+
+import { Text } from '@components/ui';
+
 import { StepCircle } from './StepCircle';
 
 const STEPS = [
@@ -36,8 +39,12 @@ export const Stepper = () => {
           />
 
           <div className="sr-only md:not-sr-only md:ml-4">
-            <span className="md:block md:text-sm md:font-medium md:text-white">Step {idx + 1}</span>
-            <span className="md:block md:text-sm md:font-medium md:text-white">{step.label}</span>
+            <Text className="text-blue-300 md:block" size="xs" uppercase>
+              Step {idx + 1}
+            </Text>
+            <Text className="text-white md:block" size="xs" weight="bold" uppercase>
+              {step.label}
+            </Text>
           </div>
         </li>
       ))}
