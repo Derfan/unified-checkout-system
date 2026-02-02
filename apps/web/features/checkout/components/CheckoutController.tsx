@@ -1,8 +1,10 @@
 'use client';
 
+import { AnimatePresence, motion } from 'motion/react';
 import { CheckoutFlowStates } from '@repo/logic';
 import { useCheckoutState } from '@repo/logic/react';
 
+import { useStepAnimation } from '../hooks/useStepAnimation';
 import { StepLayout } from './StepLayout';
 import { Stepper } from './Stepper';
 import { StepControls } from './StepControls';
@@ -25,12 +27,28 @@ const StateToComponentMap: Record<CheckoutFlowStates, React.FC> = {
 
 export const CheckoutController = () => {
   const { currentStep } = useCheckoutState();
+  const { direction, variants } = useStepAnimation(currentStep);
+
   const StepComponent = StateToComponentMap[currentStep];
 
   return (
     <StepLayout
       stepper={<Stepper />}
-      content={<StepComponent />}
+      content={
+        <AnimatePresence initial={false} mode="wait" custom={direction}>
+          <motion.div
+            key={currentStep}
+            custom={direction}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={variants}
+            layout="size"
+          >
+            <StepComponent />
+          </motion.div>
+        </AnimatePresence>
+      }
       controls={currentStep !== CheckoutFlowStates.Completed ? <StepControls /> : null}
     />
   );

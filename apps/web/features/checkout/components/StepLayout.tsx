@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { motion, LayoutGroup } from 'motion/react';
 
 import { Surface } from '@components/ui';
 
@@ -22,28 +23,32 @@ export const StepLayout = ({ stepper, content, controls }: StepLayoutProps) => (
     </nav>
 
     <main className="relative px-4 py-24 md:px-10 md:py-20">
-      <Surface className="md:flex md:gap-x-10">
-        <aside className="relative hidden md:block md:shrink-0 md:w-60">
-          <nav className="absolute px-6 py-8 z-10" aria-label="Progress">
-            {stepper}
-          </nav>
+      <LayoutGroup>
+        <motion.div layout="size" transition={{ duration: 0.3 }}>
+          <Surface className="md:flex md:gap-x-10 overflow-hidden">
+            <aside className="relative hidden md:block md:shrink-0 md:w-60">
+              <nav className="absolute px-6 py-8 z-10" aria-label="Progress">
+                {stepper}
+              </nav>
 
-          <Image
-            src={bgDesktopImage}
-            alt=""
-            className="pointer-events-none w-full h-auto"
-            role="presentation"
-            loading="eager"
-            aria-hidden="true"
-          />
-        </aside>
+              <Image
+                src={bgDesktopImage}
+                alt=""
+                className="pointer-events-none w-full h-auto"
+                role="presentation"
+                loading="eager"
+                aria-hidden="true"
+              />
+            </aside>
 
-        <div className="md:flex-1 md:flex md:flex-col md:min-w-0">
-          <div className="w-full md:mt-6">{content}</div>
+            <div className="md:flex-1 md:flex md:flex-col md:min-w-0">
+              <div className="w-full md:mt-6">{content}</div>
 
-          <div className="hidden md:block md:mt-auto">{controls}</div>
-        </div>
-      </Surface>
+              <div className="hidden md:block md:mt-auto">{controls}</div>
+            </div>
+          </Surface>
+        </motion.div>
+      </LayoutGroup>
     </main>
 
     {controls && (
