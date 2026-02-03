@@ -18,11 +18,11 @@ export const StepLayout = ({ stepper, content, controls }: StepLayoutProps) => (
       <Image src={bgMobileImage} alt="" role="presentation" className="w-full" loading="eager" />
     </div>
 
-    <nav className="fixed top-0 left-0 right-0 py-8 z-10 md:hidden" aria-label="Progress">
+    <nav className="fixed top-0 left-0 right-0 py-8 md:hidden" aria-label="Progress">
       {stepper}
     </nav>
 
-    <main className="relative px-4 py-24 md:px-10 md:py-20">
+    <main className="relative px-4 my-24 md:px-10 md:my-20">
       <LayoutGroup>
         <motion.div layout="size" transition={{ duration: 0.3 }}>
           <Surface className="md:flex md:gap-x-10 overflow-hidden">
