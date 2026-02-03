@@ -1,134 +1,349 @@
-# Turborepo starter
+# Unified Checkout System
 
-This Turborepo starter is maintained by the Turborepo core team.
+> Production-ready e-commerce checkout monorepo with XState, Next.js, and TypeScript
 
-## Using this example
+A comprehensive checkout system showcasing modern web development practices with state machines, type-safe validation, and reusable business logic.
 
-Run the following command:
+## Why This Project?
 
-```sh
-npx create-turbo@latest
+- **Enterprise architecture** - Monorepo structure with shared packages
+- **State-driven** - XState machines for predictable checkout flow
+- **Type-safe** - End-to-end TypeScript with runtime validation
+- **Framework-agnostic logic** - Core business logic works anywhere
+- **Well-tested** - Unit and integration tests with high coverage
+- **Best practices** - Clean architecture, separation of concerns
+
+## Quick Start
+
+```bash
+# Install dependencies
+pnpm install
+
+# Start development server
+pnpm dev
+
+# Run tests
+pnpm test
+
+# Build all packages
+pnpm build
 ```
 
-## What's inside?
+Open [http://localhost:3000](http://localhost:3000) to view the checkout flow.
 
-This Turborepo includes the following packages/apps:
+## Tech Stack
 
-### Apps and Packages
+| Technology         | Purpose                         |
+| ------------------ | ------------------------------- |
+| **Turborepo**      | Monorepo build system           |
+| **pnpm**           | Fast, efficient package manager |
+| **TypeScript**     | Type safety across the stack    |
+| **Next.js 16**     | React framework with App Router |
+| **XState 5**       | State machines and actors       |
+| **Zod**            | Schema validation               |
+| **Tailwind CSS 4** | Utility-first styling           |
+| **Vitest**         | Fast unit testing               |
+| **Husky**          | Git hooks for quality checks    |
+| **Commitlint**     | Conventional commits            |
 
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
+## Project Structure
 
 ```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
-
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
+unified-checkout-system/
+├── apps/
+│   └── web/                    # Next.js application
+│       ├── app/                # App Router pages
+│       ├── components/         # UI components
+│       └── features/           # Feature modules
+│
+├── packages/
+│   ├── schema/                 # Zod validation schemas
+│   │   └── src/
+│   │       ├── personal-details.ts
+│   │       ├── address.ts
+│   │       ├── payment-details.ts
+│   │       └── checkout.ts
+│   │
+│   ├── logic/                  # XState business logic
+│   │   ├── src/core/           # Framework-agnostic
+│   │   └── src/react/          # React bindings
+│   │
+│   ├── eslint-config/          # Shared ESLint configs
+│   ├── typescript-config/      # Shared tsconfig.json
+│   └── vitest-config/          # Shared test configs
+│
+├── turbo.json                  # Turborepo configuration
+└── pnpm-workspace.yaml         # Workspace definition
 ```
 
-You can build a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+## Packages
+
+### Applications
+
+#### [web](./apps/web/README.md)
+
+Next.js checkout application with multi-step flow, animations, and form validation.
+
+**Features:**
+
+- Multi-step checkout wizard
+- Animated step transitions
+- Custom form components (card input, phone input, etc.)
+- Responsive design
+- Server-side rendering
+
+### Shared Packages
+
+#### [@repo/schema](./packages/schema/README.md)
+
+Type-safe Zod schemas for checkout data validation.
+
+**Exports:**
+
+- `PersonalDetailsSchema` - User information
+- `AddressSchema` - Billing/shipping addresses
+- `PaymentDetailsSchema` - Credit card validation
+- `CheckoutSchema` - Complete checkout data
+
+**Features:**
+
+- Runtime validation
+- TypeScript type inference
+- Custom transformations (trim, uppercase, format)
+- Luhn algorithm for card validation
+
+#### [@repo/logic](./packages/logic/README.md)
+
+XState state machines for checkout flow management.
+
+**Exports:**
+
+- `checkoutFlowMachine` - Main orchestrator
+- Step machines (personal details, shipping, payment)
+- React hooks and context providers
+
+**Features:**
+
+- Predictable state management
+- Framework-agnostic core
+- Built-in retry logic
+- Error handling
+- Time-travel debugging
+
+#### [@repo/eslint-config](./packages/eslint-config/)
+
+Shared ESLint configurations.
+
+**Configs:**
+
+- `base.js` - Base rules
+- `next.js` - Next.js specific
+- `react-internal.js` - React libraries
+
+#### [@repo/typescript-config](./packages/typescript-config/)
+
+Shared TypeScript configurations.
+
+**Configs:**
+
+- `base.json` - Base settings
+- `nextjs.json` - Next.js apps
+- `react-library.json` - React libraries
+
+#### [@repo/vitest-config](./packages/vitest-config/)
+
+Shared Vitest test configurations.
+
+**Configs:**
+
+- `base.ts` - Base setup
+- `next.ts` - Next.js apps
+- `node.ts` - Node packages
+
+## Available Scripts
+
+### Development
+
+```bash
+# Start all apps in dev mode
+pnpm dev
+
+# Start specific app
+pnpm --filter web dev
+```
+
+### Building
+
+```bash
+# Build all apps and packages
+pnpm build
+
+# Build specific package
+pnpm --filter @repo/schema build
+```
+
+### Testing
+
+```bash
+# Run all tests
+pnpm test
+
+# Run tests with coverage
+pnpm --filter web test:coverage
+
+# Watch mode
+pnpm --filter @repo/logic test:watch
+```
+
+### Code Quality
+
+```bash
+# Lint all packages
+pnpm lint
+
+# Type check all packages
+pnpm check-types
+
+# Format code
+pnpm format
+```
+
+## Architecture
+
+### Data Flow
 
 ```
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
-
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
+User Input → Form Components → React Hook Form
+                                    ↓
+                          Zod Schema Validation
+                          (@repo/schema)
+                                    ↓
+                          XState Step Machine
+                          (@repo/logic)
+                                    ↓
+                          API Service
+                                    ↓
+                          Parent Flow Machine
+                                    ↓
+                          Next Step
 ```
 
-### Develop
-
-To develop all apps and packages, run the following command:
+### State Management
 
 ```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
-
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
+CheckoutFlowMachine (Parent)
+├── PersonalDetailsMachine (Child)
+├── ShippingAddressMachine (Child)
+└── PaymentDetailsMachine (Child)
 ```
 
-You can develop a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+Each step machine:
 
-```
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
+1. Validates input with Zod
+2. Saves data via API
+3. Handles errors with retry logic
+4. Outputs validated data to parent
 
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
+## Checkout Flow
 
-### Remote Caching
+**Steps:**
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+1. **Personal Details** - Title, name, email, phone
+2. **Shipping Address** - Street, city, postal code, country
+3. **Payment Details** - Card number (Luhn), expiry, CVV
+4. **Confirmation** - Review all information
+5. **Completed** - Success message
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+**Navigation:**
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
+- Linear progression (1 → 2 → 3 → 4 → 5)
+- Back button to previous step
+- Jump to any completed step
 
-```
-cd my-turborepo
+## Git Workflow
 
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
+### Commit Convention
 
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
-```
+Using [Conventional Commits](https://www.conventionalcommits.org/):
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
-
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
+```bash
+feat(web): add payment step animation
+fix(schema): correct postal code regex
+docs(logic): update state machine diagram
+test(web): add card input tests
 ```
 
-## Useful Links
+### Git Hooks
 
-Learn more about the power of Turborepo:
+- **pre-commit**: Lint staged files
+- **commit-msg**: Validate commit message format
 
-- [Tasks](https://turborepo.dev/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.dev/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.dev/docs/reference/configuration)
-- [CLI Usage](https://turborepo.dev/docs/reference/command-line-reference)
+## Development Guidelines
+
+### Adding a New Package
+
+1. Create package directory in `packages/`
+2. Add `package.json` with workspace dependencies
+3. Export from `index.ts`
+4. Add README.md
+5. Update root README (this file)
+
+### Adding a New Feature
+
+1. Create feature directory in `apps/web/features/`
+2. Implement components, hooks, and logic
+3. Add tests
+4. Update feature documentation
+
+### Testing Strategy
+
+- **Unit tests**: Individual components and functions
+- **Integration tests**: State machine flows
+- **Component tests**: React Testing Library
+
+**Coverage goals:**
+
+- Critical paths: 100%
+- Business logic: 90%+
+- UI components: 80%+
+
+## Benefits of This Architecture
+
+✅ **Reusability** - Share schemas and logic across projects  
+✅ **Maintainability** - Change validation in one place  
+✅ **Type Safety** - Compile-time errors for invalid data  
+✅ **Testability** - Isolated, easy-to-test units  
+✅ **Scalability** - Add features without breaking existing code  
+✅ **DX** - Great developer experience with IntelliSense
+
+## Performance
+
+- **Turborepo caching** - Only rebuild what changed
+- **pnpm workspaces** - Efficient dependency management
+- **Incremental builds** - Fast development cycles
+- **Code splitting** - Optimized bundle sizes
+- **Tree shaking** - Remove unused code
+
+## Requirements
+
+- **Node.js** >= 18
+- **pnpm** >= 9.0.0
+
+## Environment
+
+```bash
+# Install pnpm
+npm install -g pnpm
+
+# Verify installation
+node --version  # >= 18
+pnpm --version  # >= 9.0.0
+```
+
+## License
+
+This is a portfolio project demonstrating modern web development practices.
+
+---
+
+**Built with modern tooling and best practices for production-ready e-commerce**
