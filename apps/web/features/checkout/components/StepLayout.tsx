@@ -14,31 +14,37 @@ interface StepLayoutProps {
 
 export const StepLayout = ({ stepper, content, controls }: StepLayoutProps) => (
   <div className="relative min-h-screen flex flex-col scrollable-main">
-    <div className="fixed top-0 right-0 left-0 pointer-events-none md:sr-only" aria-hidden="true">
-      <Image src={bgMobileImage} alt="" role="presentation" className="w-full" loading="eager" />
-    </div>
+    <Image
+      src={bgMobileImage}
+      alt="background"
+      role="presentation"
+      className="object-contain object-top md:hidden"
+      loading="eager"
+      fill
+    />
 
-    <nav className="fixed top-0 left-0 right-0 py-8 md:hidden" aria-label="Progress">
+    <nav className="sticky top-0 py-8 md:hidden" aria-label="Progress">
       {stepper}
     </nav>
 
-    <main className="relative px-4 my-24 md:px-10 md:my-20">
+    <main className="relative px-4 mb-24 md:px-10 md:my-20 md:mx-auto md:max-w-200">
       <LayoutGroup>
         <motion.div layout="size" transition={{ duration: 0.3 }}>
-          <Surface className="md:flex md:gap-x-10 overflow-hidden">
-            <aside className="relative hidden md:block md:shrink-0 md:w-60">
-              <nav className="absolute px-6 py-8 z-10" aria-label="Progress">
-                {stepper}
-              </nav>
-
+          <Surface className="md:flex md:gap-x-10 md:p-4 md:pr-8">
+            <aside className="relative hidden md:block md:shrink-0 md:w-60 md:min-h-130 ">
               <Image
                 src={bgDesktopImage}
-                alt=""
-                className="pointer-events-none w-full h-auto"
+                alt="background"
+                className="rounded object-cover object-bottom"
                 role="presentation"
                 loading="eager"
                 aria-hidden="true"
+                fill
               />
+
+              <nav className="relative px-6 py-8" aria-label="Progress">
+                {stepper}
+              </nav>
             </aside>
 
             <div className="md:flex-1 md:flex md:flex-col md:min-w-0">
